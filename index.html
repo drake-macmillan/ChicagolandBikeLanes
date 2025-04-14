@@ -1,10 +1,3 @@
-<!--
-<h1>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-</h1>
-<iframe src="https://www.google.com/maps/d/embed?mid=18qVstJFN7Pdz0TwHb6OqfkpRHTGQ8ns&ehbc=2E312F" width="100%" height="600"></iframe>
---!>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,17 +43,19 @@
     }).addTo(map);
 
     // Locate control (persistent location button)
-    L.control.locate({
-      position: 'topleft',
-      drawCircle: true,
-      keepCurrentZoomLevel: true,
-      strings: {
-        title: "Show me where I am"
-      },
-      locateOptions: {
-        enableHighAccuracy: true
-      }
-    }).addTo(map);
+const locateControl = L.control.locate({
+  position: 'topleft',
+  drawCircle: true,
+  keepCurrentZoomLevel: true,
+  strings: {
+    title: "Show me where I am"
+  },
+  locateOptions: {
+    enableHighAccuracy: true
+  }
+}).addTo(map);
+
+locateControl.start();
   </script>
 </body>
 </html>
