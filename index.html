@@ -11,10 +11,14 @@
   <meta charset="utf-8" />
   <title>Chicago Bike Map Viewer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <!-- Geocoder CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+  <!-- LocateControl CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
+
   <style>
     body, html { margin: 0; height: 100%; }
     #map { height: 100vh; width: 100vw; }
@@ -27,10 +31,12 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <!-- Geocoder JS -->
   <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+  <!-- LocateControl JS -->
+  <script src="https://unpkg.com/leaflet.locatecontrol/dist/L.Control.Locate.min.js"></script>
 
   <script>
-    // Initialize map
-    const map = L.map('map').setView([41.8781, -87.6298], 13); // Chicago coords
+    // Initialize map centered on Chicago
+    const map = L.map('map').setView([41.8781, -87.6298], 13);
 
     // Base layer (OpenStreetMap)
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -38,21 +44,24 @@
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    // Geocoder (address search)
+    // Geocoder (search bar)
     L.Control.geocoder({
       defaultMarkGeocode: true
     }).addTo(map);
 
-    // User location (browser GPS)
-    map.locate({ setView: true, maxZoom: 15 });
-    function onLocationFound(e) {
-      L.marker(e.latlng).addTo(map).bindPopup("You are here").openPopup();
-    }
-    map.on('locationfound', onLocationFound);
-
-    map.on('locationerror', () => {
-      console.warn("Location access denied or unavailable.");
-    });
+    // Locate control (persistent location button)
+    L.control.locate({
+      position: 'topleft',
+      drawCircle: true,
+      keepCurrentZoomLevel: true,
+      strings: {
+        title: "Show me where I am"
+      },
+      locateOptions: {
+        enableHighAccuracy: true
+      }
+    }).addTo(map);
   </script>
 </body>
 </html>
+
