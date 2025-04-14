@@ -1,5 +1,58 @@
+<!--
 <h1>
-  Hello
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </h1>
 <iframe src="https://www.google.com/maps/d/embed?mid=18qVstJFN7Pdz0TwHb6OqfkpRHTGQ8ns&ehbc=2E312F" width="100%" height="600"></iframe>
+--!>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Chicago Bike Map Viewer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <!-- Geocoder CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+  <style>
+    body, html { margin: 0; height: 100%; }
+    #map { height: 100vh; width: 100vw; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Geocoder JS -->
+  <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+  <script>
+    // Initialize map
+    const map = L.map('map').setView([41.8781, -87.6298], 13); // Chicago coords
+
+    // Base layer (OpenStreetMap)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Geocoder (address search)
+    L.Control.geocoder({
+      defaultMarkGeocode: true
+    }).addTo(map);
+
+    // User location (browser GPS)
+    map.locate({ setView: true, maxZoom: 15 });
+    function onLocationFound(e) {
+      L.marker(e.latlng).addTo(map).bindPopup("You are here").openPopup();
+    }
+    map.on('locationfound', onLocationFound);
+
+    map.on('locationerror', () => {
+      console.warn("Location access denied or unavailable.");
+    });
+  </script>
+</body>
+</html>
