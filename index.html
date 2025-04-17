@@ -36,7 +36,18 @@
       maxZoom: 19,
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
-
+  fetch('data/Chicago%20Bikeways%2021%20April%202024%20(1).json')
+    .then(response => response.json())
+    .then(data => {
+      L.geoJSON(data, {
+        style: {
+          color: 'blue',
+          weight: 2
+        }
+      }).addTo(map);
+    })
+    .catch(err => console.error('Error loading GeoJSON:', err));
+    
     // Geocoder (search bar)
     const geocoder = L.Control.geocoder({
       defaultMarkGeocode: true
