@@ -44,10 +44,7 @@
     .then(response => response.json())
     .then(data => {
       L.geoJSON(data, {
-        style: {
-          color: 'blue',
-          weight: 2
-        }
+        style: getStyle                   //calls function from style-rules.js
       }).addTo(map);
     })
     .catch(err => console.error('Error loading GeoJSON:', err));
