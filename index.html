@@ -51,14 +51,16 @@
     .catch(err => console.error('Error loading GeoJSON:', err));
 
  //direction arrow layer
-  fetch('data/direction_arrows.json')
-    .then(response => response.json())
-    .then(data => {
-      L.geoJSON(data, {
-        style: getStyle                   //calls function from style-rules.js
-      }).addTo(map);
-    })
-    .catch(err => console.error('Error loading GeoJSON:', err))
+ fetch('data/direction_arrows.json')
+  .then(response => response.json())
+  .then(data => {
+    L.geoJSON(data, {
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, { icon: getArrowIcon(feature) });
+      }
+    }).addTo(map);
+  })
+  .catch(err => console.error('Error loading direction arrows:', err));
 
     
     // Geocoder (search bar)
