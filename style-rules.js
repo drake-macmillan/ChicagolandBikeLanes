@@ -13,3 +13,22 @@ function getStyle(feature) {
 
   return styles[type] || { color: "#AAAAAA", weight: 1 };
 }
+
+function getArrowIcon(feature) {
+  const label = feature.properties.label;
+
+  // Unicode arrow symbols
+  const arrows = {
+    N: '↑', NE: '↗', E: '→', SE: '↘',
+    S: '↓', SW: '↙', W: '←', NW: '↖'
+  };
+
+  const arrow = arrows[label] || '•';
+
+  return L.divIcon({
+    html: `<div style="font-size: 20px; transform: rotate(0deg);">${arrow}</div>`,
+    className: '',  // optional: remove Leaflet default styling
+    iconSize: [20, 20],
+    iconAnchor: [10, 10]
+  });
+}
