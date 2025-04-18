@@ -1,3 +1,5 @@
+<script src="js/style-rules.js"></script>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,6 +38,8 @@
       maxZoom: 19,
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
+
+    //bike lane map layer
   fetch('data/chicagoland_bikeways.json')
     .then(response => response.json())
     .then(data => {
