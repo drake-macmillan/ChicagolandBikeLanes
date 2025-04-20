@@ -41,7 +41,7 @@
     }).addTo(map);
 
     //bike lane map layer
-  fetch('data/chicagoland_bikeways_19apr25.json')
+  fetch('data/chicagoland_bikeways_19apr25.geojson')
     .then(response => response.json())
     .then(data => {
       L.geoJSON(data, {
