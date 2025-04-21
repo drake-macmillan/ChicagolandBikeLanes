@@ -27,8 +27,39 @@ function getArrowIcon(feature) {
 
   return L.divIcon({
     html: `<div style="font-size: 20px; transform: rotate(0deg);">${arrow}</div>`,
-    className: '',  // optional: remove Leaflet default styling
+    className: '',
     iconSize: [20, 20],
     iconAnchor: [10, 10]
   });
+}
+
+// Global arrow layer to toggle based on zoom level
+let arrowLayer = null;
+
+// Function to load arrows and store them in the global layer
+function loadArrowLayer(map) {
+  fetch('data/direction_arrows.json')
+    .then(response => response.json())
+    .then(data => {
+      arrowLayer = L.geoJSON(data, {
+        pointToLayer: function (feature, latlng) {
+          return L.marker(latlng, { icon: getArrowIcon(feature) });
+        }
+      });
+
+      // Add it only if zoom is high enough
+      if (map.getZoom() >= 14) {
+        arrowLayer.addTo(map);
+      }
+
+      // Set up zoom listener for showing/hiding
+      map.on('zoomend', function () {
+        if (!arrowLayer) return;
+        if (map.getZoom() >= 14) {
+          if (!map.hasLayer(arrowLayer)) map.addLayer(arrowLayer);
+        } else {
+          if (map.hasLayer(arrowLayer)) map.removeLayer(arrowLayer);
+        }
+      });
+    });
 }
