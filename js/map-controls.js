@@ -44,6 +44,18 @@ buttonContainer.onAdd = function (map) {
     // placeholder for future logic
   };
 
+  // Button: Toggle Legend
+  const legendBtn = L.DomUtil.create('button', 'leaflet-bar', div);
+  legendBtn.innerHTML = "Legend";
+  legendBtn.onclick = () => {
+    const legend = document.getElementById('legend-popup');
+    if (legend.style.display === 'none') {
+      legend.style.display = 'block';
+    } else {
+      legend.style.display = 'none';
+    }
+  };
+
   return div;
 };
 
