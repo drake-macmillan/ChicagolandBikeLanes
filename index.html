@@ -36,6 +36,9 @@
   <!-- Initiate map -->
   <script src="js/init-map.js"></script>
 
+  <!-- Add map control buttons -->
+  <script src="js/map-controls.js"></script>
+
   <!-- Custom script to initialize LocateControl on the map -->
   <script src="js/locate-control.js"></script>
 
@@ -62,12 +65,6 @@
     }).addTo(map);
   })
   .catch(err => console.error('Error loading direction arrows:', err));
-
-    
-    // Geocoder (search bar)
-    const geocoder = L.Control.geocoder({
-      defaultMarkGeocode: true
-    }).addTo(map);
 
     // Trigger location request when searching
     geocoder.on('markgeocode', function (e) {
