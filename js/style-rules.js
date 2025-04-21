@@ -55,7 +55,7 @@ function loadArrowLayer(map) {
       // Set up zoom listener for showing/hiding
       map.on('zoomend', function () {
         if (!arrowLayer) return;
-        if (map.getZoom() >= 14) {
+        if (map.getZoom() >= 15) {
           if (!map.hasLayer(arrowLayer)) map.addLayer(arrowLayer);
         } else {
           if (map.hasLayer(arrowLayer)) map.removeLayer(arrowLayer);
