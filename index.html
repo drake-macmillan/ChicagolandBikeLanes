@@ -30,11 +30,15 @@
   <!-- Geocoder JS -->
   <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
   
-  <!-- LocateControl JS -->
+  <!-- Load Leaflet LocateControl plugin -->
   <script src="https://unpkg.com/leaflet.locatecontrol/dist/L.Control.Locate.min.js"></script>
 
   <!-- Initiate map -->
   <script src="js/init-map.js"></script>
+
+  <!-- Custom script to initialize LocateControl on the map -->
+  <script src="js/locate-control.js"></script>
+
   
   <script>
     //bike lane map layer
@@ -63,19 +67,6 @@
     // Geocoder (search bar)
     const geocoder = L.Control.geocoder({
       defaultMarkGeocode: true
-    }).addTo(map);
-
-    // Locate control (persistent location button)
-    const locateControl = L.control.locate({
-      position: 'topleft',
-      drawCircle: true,
-      keepCurrentZoomLevel: true,
-      strings: {
-        title: "Show me where I am"
-      },
-      locateOptions: {
-        enableHighAccuracy: true
-      }
     }).addTo(map);
 
     // Trigger location request when searching
