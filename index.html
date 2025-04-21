@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,18 +67,6 @@
     }).addTo(map);
   })
   .catch(err => console.error('Error loading direction arrows:', err));
-
-    // Trigger location request when searching
-    geocoder.on('markgeocode', function (e) {
-      // Start location when user tries to search
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-          locateControl.start(); // Start the locate control once search is done
-        }, function (err) {
-          console.error("Geolocation error: " + err.message);
-        });
-      }
-    });
 
     // Optional: Prevent re-prompting if already granted
     if (localStorage.getItem('location-granted') !== 'true') {
