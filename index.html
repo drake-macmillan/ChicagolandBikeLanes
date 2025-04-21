@@ -22,24 +22,17 @@
   <div id="map"></div>
   
   <!-- styling JS -->
-  <script src="style-rules.js"></script>
+  <script src="js/style-rules.js"></script>
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <!-- Geocoder JS -->
   <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
   <!-- LocateControl JS -->
   <script src="https://unpkg.com/leaflet.locatecontrol/dist/L.Control.Locate.min.js"></script>
-
+  <!-- Initiate map -->
+  <script src="js/init-map.js"></script>
+  
   <script>
-    // Initialize map centered on Chicago
-    const map = L.map('map').setView([41.8781, -87.6298], 13);
-
-    // Base layer (OpenStreetMap)
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
-
     //bike lane map layer
   fetch('data/chicagoland_bikeways_19apr25.geojson')
     .then(response => response.json())
