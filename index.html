@@ -73,7 +73,17 @@
       locateControl.start(); // Request location the first time
       localStorage.setItem('location-granted', 'true'); // Remember the choice
     }
-
+//zoom listener, used to hide/show icons based on zoom level
+map.on('zoomend', function () {
+  const zoom = map.getZoom();
+  if (arrowLayer) {
+    if (zoom >= 14) {
+      map.addLayer(arrowLayer);
+    } else {
+      map.removeLayer(arrowLayer);
+    }
+  }
+});
   </script>
 
 <div id="legend-popup" style="display: none;">
