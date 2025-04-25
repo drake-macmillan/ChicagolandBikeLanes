@@ -31,7 +31,7 @@ geocoder.on('markgeocode', function (e) {
 const buttonContainer = L.control({ position: 'topleft' });
 
 buttonContainer.onAdd = function (map) {
-  const div = L.DomUtil.create('div', 'custom-buttons');
+  const div = L.DomUtil.create('div', 'custom-button');
 
   // Button: Open in Google Maps
   const googleBtn = L.DomUtil.create('button', 'leaflet-bar custom-icon-button', div);
