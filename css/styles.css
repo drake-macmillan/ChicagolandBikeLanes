@@ -10,10 +10,10 @@ body, html {
 }
 
 .custom-control-container {
-  background: white;
-  padding: 6px;
-  border-radius: 8px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.3);
+  background: transparent;
+  padding: 4px;
+  border: none;
+  box-shadow: none;
 }
 
 .custom-button {
