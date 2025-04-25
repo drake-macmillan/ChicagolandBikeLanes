@@ -31,10 +31,9 @@ geocoder.on('markgeocode', function (e) {
 const buttonContainer = L.control({ position: 'topleft' });
 
 buttonContainer.onAdd = function (map) {
-  const div = L.DomUtil.create('div', 'custom-button');
+  const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control custom-control-container');
 
-  // Button: Open in Google Maps
-  const googleBtn = L.DomUtil.create('button', 'leaflet-bar custom-icon-button', div);
+  const googleBtn = L.DomUtil.create('button', 'custom-button', div);
   const googleIcon = L.DomUtil.create('img', '', googleBtn);
   googleIcon.src = 'images/google_maps_icon.webp';
   googleIcon.alt = 'Google Maps';
@@ -43,29 +42,25 @@ buttonContainer.onAdd = function (map) {
     window.open(`https://www.google.com/maps?q=${center.lat},${center.lng}`, '_blank');
   };
 
-  // Button: Load Divvy Map
-  const googleBtn = L.DomUtil.create('button', 'leaflet-bar custom-icon-button', div);
-  const googleIcon = L.DomUtil.create('img', '', googleBtn);
-  googleIcon.src = 'images/divvy_logo.jpg'; // placeholder image
-  googleIcon.alt = 'Divvy';
-  layerBtn1.onclick = () => {
+  const divvyBtn = L.DomUtil.create('button', 'custom-button', div);
+  const divvyIcon = L.DomUtil.create('img', '', divvyBtn);
+  divvyIcon.src = 'images/divvy_logo.jpg';
+  divvyIcon.alt = 'Divvy';
+  divvyBtn.onclick = () => {
     console.log("Layer 1 button clicked");
-    // placeholder for future logic
   };
 
-  // Button: Toggle Legend
-  const legendBtn = L.DomUtil.create('button', 'leaflet-bar', div);
-  legendBtn.innerHTML = "Legend";
+  const legendBtn = L.DomUtil.create('button', 'custom-button', div);
+  const legendIcon = L.DomUtil.create('img', '', legendBtn);
+  legendIcon.src = 'images/legend_icon.jpg';
+  legendIcon.alt = 'Legend';
   legendBtn.onclick = () => {
     const legend = document.getElementById('legend-popup');
-    if (legend.style.display === 'none') {
-      legend.style.display = 'block';
-    } else {
-      legend.style.display = 'none';
-    }
+    legend.style.display = (legend.style.display === 'none') ? 'block' : 'none';
   };
 
   return div;
 };
 
 buttonContainer.addTo(map);
+
