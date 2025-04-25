@@ -28,14 +28,14 @@ geocoder.on('markgeocode', function (e) {
 });
 
 // Custom button controls
-const buttonContainer = L.control({ position: 'topright' });
+const buttonContainer = L.control({ position: 'topleft' });
 
 buttonContainer.onAdd = function (map) {
   const div = L.DomUtil.create('div', 'custom-buttons');
 
   // Button: Open in Google Maps
   const googleBtn = L.DomUtil.create('button', 'leaflet-bar', div);
-  googleBtn.innerHTML = "Open in Google Maps";
+  googleBtn.innerHTML = "GoogleMaps";
   googleBtn.onclick = () => {
     const center = map.getCenter();
     window.open(`https://www.google.com/maps?q=${center.lat},${center.lng}`, '_blank');
@@ -43,7 +43,7 @@ buttonContainer.onAdd = function (map) {
 
   // Button: Load Extra Layer 1
   const layerBtn1 = L.DomUtil.create('button', 'leaflet-bar', div);
-  layerBtn1.innerHTML = "Layer 1";
+  layerBtn1.innerHTML = "1";
   layerBtn1.onclick = () => {
     console.log("Layer 1 button clicked");
     // placeholder for future logic
@@ -51,7 +51,7 @@ buttonContainer.onAdd = function (map) {
 
   // Button: Load Extra Layer 2
   const layerBtn2 = L.DomUtil.create('button', 'leaflet-bar', div);
-  layerBtn2.innerHTML = "Layer 2";
+  layerBtn2.innerHTML = "2";
   layerBtn2.onclick = () => {
     console.log("Layer 2 button clicked");
     // placeholder for future logic
