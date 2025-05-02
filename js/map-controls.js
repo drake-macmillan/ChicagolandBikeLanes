@@ -23,14 +23,10 @@ const locateControl = L.control.locate({
 
 // Trigger location request when searching
 geocoder.on('markgeocode', function (e) {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      locateControl.start();
-    }, function (err) {
-      console.error("Geolocation error: " + err.message);
-    });
-  }
+  // Optional: just move map to the geocode result
+  map.setView(e.geocode.center, 14); // or any zoom level you want
 });
+
 
 // Custom button controls
 const buttonContainer = L.control({ position: 'topleft' });
