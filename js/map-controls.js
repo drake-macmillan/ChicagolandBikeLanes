@@ -52,7 +52,7 @@ buttonContainer.onAdd = function (map) {
 
   const legendBtn = L.DomUtil.create('button', 'custom-button', div);
   const legendIcon = L.DomUtil.create('img', '', legendBtn);
-  legendIcon.src = 'images/legend_icon.jpg';
+  legendIcon.src = 'images/infoicon.jpg';
   legendIcon.alt = 'Legend';
   legendBtn.onclick = () => {
     const legend = document.getElementById('legend-popup');
