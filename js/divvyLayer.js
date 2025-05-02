@@ -16,8 +16,8 @@ async function loadDivvyStations(map) {
     divvyLayer = L.layerGroup(
       stations.map(station =>
         L.circleMarker([station.lat, station.lon], {
-          radius: 5,
-          color: 'blue',
+          radius: 2,
+          color: 'cyan',
           fillColor: '#00f',
           fillOpacity: 0.6
         }).bindPopup(`<strong>${station.name}</strong>`)
