@@ -1,6 +1,11 @@
 // Geocoder (search bar)
-const geocoder = L.Control.geocoder({
-  defaultMarkGeocode: true
+const geocoder = L.Control.geocoder('https://photon.komoot.io/api/', {
+  defaultMarkGeocode: true,
+  placeholder: 'Search', //originally said 'Search within Chicagoland' but I adjusted the boundaries so it's the continental US
+  bounds: L.latLngBounds(
+    L.latLng(24.5, -125),  // Southwest corner (near san diego)
+    L.latLng(49.5, -66.9)   // Northeast corner (Maine-Canada border)
+  )
 }).addTo(map);
 
 // Add persistent location button
