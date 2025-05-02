@@ -11,7 +11,7 @@ body, html {
 
 .custom-control-container {
   background: transparent;
-  padding: 4px;
+  padding: 2px;
   border: none;
   box-shadow: none;
 }
@@ -20,8 +20,8 @@ body, html {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  width: 32px;
+  height: 32px;
   margin: 6px 0;
   padding: 0;
   background-color: #1d72b8;
