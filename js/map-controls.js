@@ -48,7 +48,7 @@ buttonContainer.onAdd = function (map) {
   divvyIcon.src = 'images/divvy_logo.jpg';
   divvyIcon.alt = 'Divvy';
   divvyBtn.onclick = () => {
-    console.log("Layer 1 button clicked");
+    toggleDivvyLayer(map);
   };
 
   const legendBtn = L.DomUtil.create('button', 'custom-button', div);
