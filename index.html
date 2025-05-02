@@ -54,12 +54,6 @@
 
  //direction arrow layer
 loadArrowLayer(map);
-
-    // Optional: Prevent re-prompting if already granted
-    if (localStorage.getItem('location-granted') !== 'true') {
-      locateControl.start(); // Request location the first time
-      localStorage.setItem('location-granted', 'true'); // Remember the choice
-    }
   </script>
 
 <div id="legend-popup" style="display: none;">
