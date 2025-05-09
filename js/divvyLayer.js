@@ -1,98 +1,92 @@
 // divvyLayer.js
-let divvyStationLayer = null;
-let divvyEbikesLayer = null;
+let divvyLayer = null;
+let ebikeLayer = null;
 
 async function loadDivvyStations(map) {
-  const infoUrl = 'https://gbfs.divvybikes.com/gbfs/en/station_information.json';
-  const statusUrl = 'https://gbfs.divvybikes.com/gbfs/en/station_status.json';
+  const infoURL = 'https://gbfs.divvybikes.com/gbfs/en/station_information.json';
+  const statusURL = 'https://gbfs.divvybikes.com/gbfs/en/station_status.json';
+  const freeBikeURL = 'https://gbfs.divvybikes.com/gbfs/en/free_bike_status.json';
 
   try {
-    const [infoResponse, statusResponse] = await Promise.all([
-      fetch(infoUrl),
-      fetch(statusUrl)
+    const [infoRes, statusRes, freeBikeRes] = await Promise.all([
+      fetch(infoURL),
+      fetch(statusURL),
+      fetch(freeBikeURL)
     ]);
 
-    const infoData = await infoResponse.json();
-    const statusData = await statusResponse.json();
+    const stationInfo = (await infoRes.json()).data.stations;
+    const stationStatus = (await statusRes.json()).data.stations;
+    const freeBikeData = await freeBikeRes.json();
 
-    const stations = infoData.data.stations;
-    const statusMap = Object.fromEntries(
-      statusData.data.stations.map(s => [s.station_id, s])
-    );
+    // Create a lookup table for station status
+    const statusMap = {};
+    stationStatus.forEach(station => {
+      statusMap[station.station_id] = station;
+    });
 
-    if (divvyStationLayer) {
-      map.removeLayer(divvyStationLayer);
-    }
+    if (divvyLayer) map.removeLayer(divvyLayer);
+    if (ebikeLayer) map.removeLayer(ebikeLayer);
 
-    divvyStationLayer = L.layerGroup(
-      stations.map(station => {
+    // Docked station markers
+    divvyLayer = L.layerGroup(
+      stationInfo.map(station => {
         const status = statusMap[station.station_id];
+        const bikes = status?.num_bikes_available ?? '?';
+        const docks = status?.num_docks_available ?? '?';
         const ebikes = status?.num_ebikes_available ?? 0;
-        const totalBikes = status?.num_bikes_available ?? 0;
-        const classicBikes = totalBikes - ebikes;
-        const docks = status?.num_docks_available ?? 'N/A';
+        const classicBikes = bikes - ebikes;
 
-        return L.circleMarker([station.lat, station.lon], {
-          radius: 4,
-          color: 'cyan',
-          fillColor: '#00f',
-          fillOpacity: 0.6
-        }).bindPopup(`
-          <strong>${station.name}</strong><br>
-          ⚡ Electric Bikes: ${ebikes}<br>
-          🚲 Classic Bikes: ${classicBikes}<br>
-          🅿️ Docks Available: ${docks}
-        `);
+        const icon = L.divIcon({
+          className: 'divvy-icon',
+          html: `<div style="text-align:center; font-size: 10px; line-height:1.2;">
+                   🚲 ${bikes}<br>🅿️ ${docks}
+                 </div>`,
+          iconSize: [40, 25],
+          iconAnchor: [20, 12]
+        });
+
+        return L.marker([station.lat, station.lon], { icon }).bindPopup(
+          `<strong>${station.name}</strong><br>
+           🛵 Electric Bikes: ${ebikes}<br>
+           🚲 Classic Bikes: ${classicBikes}<br>
+           🅿️ Docks Available: ${docks}`
+        );
       })
     );
+    divvyLayer.addTo(map);
 
-    divvyStationLayer.addTo(map);
-
-  } catch (error) {
-    console.error('Failed to load Divvy station data:', error);
-  }
-}
-
-async function loadDivvyEbikes(map) {
-  const url = 'https://gbfs.divvybikes.com/gbfs/en/free_bike_status.json';
-
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    const bikes = data.data.bikes;
-
-    if (divvyEbikesLayer) {
-      map.removeLayer(divvyEbikesLayer);
-    }
-
-    divvyEbikesLayer = L.layerGroup(
-      bikes.map(bike =>
-        L.marker([bike.lat, bike.lon], {
-          icon: L.divIcon({
-            className: 'ebike-icon',
-            html: '⚡',
-            iconSize: [20, 20]
-          })
-        }).bindPopup(`<strong>Free-floating E-Bike</strong><br>ID: ${bike.bike_id}`)
-      )
+    // Free-floating e-bikes
+    ebikeLayer = L.layerGroup(
+      freeBikeData.data.bikes
+        .filter(bike => bike.is_reserved === 0 && bike.is_disabled === 0)
+        .map(bike =>
+          L.marker([bike.lat, bike.lon], {
+            icon: L.divIcon({
+              className: 'ebike-icon',
+              html: '🛵',
+              iconSize: [10, 10]
+            })
+          }).bindPopup(`<strong>Electric Bike</strong><br>Bike ID: ${bike.bike_id}`)
+        )
     );
+    ebikeLayer.addTo(map);
 
-    divvyEbikesLayer.addTo(map);
-  } catch (error) {
-    console.error('Failed to load free-floating e-bikes:', error);
+  } catch (err) {
+    console.error('Error loading Divvy data:', err);
   }
 }
 
 function toggleDivvyLayer(map) {
-  const anyLayerVisible =
-    (divvyStationLayer && map.hasLayer(divvyStationLayer)) ||
-    (divvyEbikesLayer && map.hasLayer(divvyEbikesLayer));
-
-  if (anyLayerVisible) {
-    if (divvyStationLayer) map.removeLayer(divvyStationLayer);
-    if (divvyEbikesLayer) map.removeLayer(divvyEbikesLayer);
+  const visible = divvyLayer && map.hasLayer(divvyLayer);
+  if (visible) {
+    if (divvyLayer) map.removeLayer(divvyLayer);
+    if (ebikeLayer) map.removeLayer(ebikeLayer);
   } else {
-    if (!divvyStationLayer) loadDivvyStations(map); else map.addLayer(divvyStationLayer);
-    if (!divvyEbikesLayer) loadDivvyEbikes(map); else map.addLayer(divvyEbikesLayer);
+    if (!divvyLayer || !ebikeLayer) {
+      loadDivvyStations(map);
+    } else {
+      map.addLayer(divvyLayer);
+      map.addLayer(ebikeLayer);
+    }
   }
 }
