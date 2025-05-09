@@ -36,7 +36,7 @@ async function loadDivvyStations(map) {
 
         const icon = L.divIcon({
           className: 'divvy-icon',
-          html: `<div style="text-align:center; font-size: 10px; line-height:1.2;">
+          html: `<div style="text-align:center; font-size: 15px; line-height:1.2;">
                    🚲 ${totalBikes}<br>🅿️ ${docks}
                  </div>`,
           iconSize: [40, 25],
@@ -61,7 +61,7 @@ async function loadDivvyStations(map) {
             icon: L.divIcon({
               className: 'ebike-icon',
               html: '🛵',
-              iconSize: [10, 10]
+              iconSize: [7, 7]
             })
           }) // no popup to reduce mobile clutter
         )
