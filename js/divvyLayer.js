@@ -42,7 +42,10 @@ async function loadDivvyStations(map) {
                    🚲 ${bikes}<br>🅿️ ${docks}
                  </div>`,
           iconSize: [40, 25],
-          iconAnchor: [20, 12]
+          shadowSize:   [50, 64],
+          iconAnchor: [20, 12],
+          shadowAnchor: [4, 62],
+
         });
 
         return L.marker([station.lat, station.lon], { icon }).bindPopup(
@@ -66,7 +69,8 @@ async function loadDivvyStations(map) {
               html: '🛵',
               iconSize: [10, 10]
             })
-          }).bindPopup(`<strong>Electric Bike</strong><br>Bike ID: ${bike.bike_id}`)
+          }).bindPopup(`<strong>Electric Bike</strong><br>Range: ${bike.current_range_meters ? (bike.current_range_meters / 1609.34).toFixed(1) + ' mi' : 'N/A'}<br>
+  Last Reported: ${bike.last_reported ? new Date(bike.last_reported * 1000).toLocaleString() : 'N/A'}<br>`)
         )
     );
     ebikeLayer.addTo(map);
