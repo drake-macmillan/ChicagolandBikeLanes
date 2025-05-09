@@ -1,5 +1,6 @@
-let divvyLayer = null;
+let stationLayer = null;
 let ebikeLayer = null;
+let dotLayer = null;
 
 async function loadDivvyStations(map) {
   const infoURL = 'https://gbfs.divvybikes.com/gbfs/en/station_information.json';
@@ -22,10 +23,11 @@ async function loadDivvyStations(map) {
       statusMap[station.station_id] = station;
     });
 
-    if (divvyLayer) map.removeLayer(divvyLayer);
+    if (stationLayer) map.removeLayer(stationLayer);
     if (ebikeLayer) map.removeLayer(ebikeLayer);
+    if (dotLayer) map.removeLayer(dotLayer);
 
-    divvyLayer = L.layerGroup(
+    stationLayer = L.layerGroup(
       stationInfo.map(station => {
         const status = statusMap[station.station_id];
 
@@ -51,7 +53,18 @@ async function loadDivvyStations(map) {
         );
       })
     );
-    divvyLayer.addTo(map);
+
+    dotLayer = L.layerGroup(
+      stationInfo.map(station =>
+        L.circleMarker([station.lat, station.lon], {
+          radius: 4,
+          color: '#007BFF',
+          fillColor: '#007BFF',
+          fillOpacity: 0.7,
+          weight: 0
+        })
+      )
+    );
 
     ebikeLayer = L.layerGroup(
       freeBikeData.data.bikes
@@ -63,53 +76,63 @@ async function loadDivvyStations(map) {
               html: '🛵',
               iconSize: [7, 7]
             })
-          }) // no popup to reduce mobile clutter
+          })
         )
     );
-    ebikeLayer.addTo(map);
-    
-    
-  // Adjust ebike visibility based on zoom level
-    map.on('zoomend', function() {
+
+    toggleStationVisibility(map);
+    toggleEbikeVisibility(map);
+
+    map.on('zoomend', () => {
+      toggleStationVisibility(map);
       toggleEbikeVisibility(map);
     });
-
-    // Initial check for ebike visibility when the map loads
-    toggleEbikeVisibility(map);
 
   } catch (err) {
     console.error('Error loading Divvy data:', err);
   }
 }
 
-function toggleEbikeVisibility(map) {
+function toggleStationVisibility(map) {
   const zoomLevel = map.getZoom();
-
-  // Set threshold zoom level for visibility
-  const zoomThreshold = 14; // Adjust this based on your preference
+  const zoomThreshold = 14;
 
   if (zoomLevel < zoomThreshold) {
-    // If zoom is below threshold, remove ebikeLayer
-    if (ebikeLayer) map.removeLayer(ebikeLayer);
+    if (stationLayer && map.hasLayer(stationLayer)) map.removeLayer(stationLayer);
+    if (dotLayer && !map.hasLayer(dotLayer)) map.addLayer(dotLayer);
   } else {
-    // If zoom is above threshold, ensure ebikeLayer is visible
-    if (ebikeLayer && !map.hasLayer(ebikeLayer)) {
-      map.addLayer(ebikeLayer);
-    }
+    if (dotLayer && map.hasLayer(dotLayer)) map.removeLayer(dotLayer);
+    if (stationLayer && !map.hasLayer(stationLayer)) map.addLayer(stationLayer);
+  }
+}
+
+function toggleEbikeVisibility(map) {
+  const zoomLevel = map.getZoom();
+  const zoomThreshold = 14;
+
+  if (zoomLevel < zoomThreshold) {
+    if (ebikeLayer && map.hasLayer(ebikeLayer)) map.removeLayer(ebikeLayer);
+  } else {
+    if (ebikeLayer && !map.hasLayer(ebikeLayer)) map.addLayer(ebikeLayer);
   }
 }
 
 function toggleDivvyLayer(map) {
-  const visible = divvyLayer && map.hasLayer(divvyLayer);
-  if (visible) {
-    if (divvyLayer) map.removeLayer(divvyLayer);
+  const isVisible =
+    (stationLayer && map.hasLayer(stationLayer)) ||
+    (dotLayer && map.hasLayer(dotLayer)) ||
+    (ebikeLayer && map.hasLayer(ebikeLayer));
+
+  if (isVisible) {
+    if (stationLayer) map.removeLayer(stationLayer);
+    if (dotLayer) map.removeLayer(dotLayer);
     if (ebikeLayer) map.removeLayer(ebikeLayer);
   } else {
-    if (!divvyLayer || !ebikeLayer) {
+    if (!stationLayer || !dotLayer || !ebikeLayer) {
       loadDivvyStations(map);
     } else {
-      map.addLayer(divvyLayer);
-      map.addLayer(ebikeLayer);
+      toggleStationVisibility(map);
+      toggleEbikeVisibility(map);
     }
   }
 }
