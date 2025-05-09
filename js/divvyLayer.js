@@ -86,7 +86,7 @@ function toggleEbikeVisibility(map) {
   const zoomLevel = map.getZoom();
 
   // Set threshold zoom level for visibility
-  const zoomThreshold = 7; // Adjust this based on your preference
+  const zoomThreshold = 20; // Adjust this based on your preference
 
   if (zoomLevel < zoomThreshold) {
     // If zoom is below threshold, remove ebikeLayer
