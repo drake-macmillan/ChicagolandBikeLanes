@@ -1,6 +1,7 @@
 let stationLayer = null;
 let ebikeLayer = null;
 let dotLayer = null;
+let divvyLayerEnabled = false;
 
 async function loadDivvyStations(map) {
   const infoURL = 'https://gbfs.divvybikes.com/gbfs/en/station_information.json';
@@ -80,16 +81,23 @@ async function loadDivvyStations(map) {
         )
     );
 
+    divvyLayerEnabled = true;
     toggleStationVisibility(map);
     toggleEbikeVisibility(map);
 
-    map.on('zoomend', () => {
-      toggleStationVisibility(map);
-      toggleEbikeVisibility(map);
-    });
+    map.off('zoomend', handleZoomChange);
+    map.on('zoomend', handleZoomChange);
 
   } catch (err) {
     console.error('Error loading Divvy data:', err);
+  }
+}
+
+function handleZoomChange(e) {
+  const map = e.target;
+  if (divvyLayerEnabled) {
+    toggleStationVisibility(map);
+    toggleEbikeVisibility(map);
   }
 }
 
@@ -127,10 +135,12 @@ function toggleDivvyLayer(map) {
     if (stationLayer) map.removeLayer(stationLayer);
     if (dotLayer) map.removeLayer(dotLayer);
     if (ebikeLayer) map.removeLayer(ebikeLayer);
+    divvyLayerEnabled = false;
   } else {
     if (!stationLayer || !dotLayer || !ebikeLayer) {
       loadDivvyStations(map);
     } else {
+      divvyLayerEnabled = true;
       toggleStationVisibility(map);
       toggleEbikeVisibility(map);
     }
