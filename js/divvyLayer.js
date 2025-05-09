@@ -36,7 +36,7 @@ async function loadDivvyStations(map) {
 
         const icon = L.divIcon({
           className: 'divvy-icon',
-          html: `<div style="text-align:center; font-size: 15px; line-height:1.2;">
+          html: `<div style="text-align:center; font-size: 15px; line-height:1.2; white-space: nowrap;">
                    🚲 ${totalBikes}<br>🅿️ ${docks}
                  </div>`,
           iconSize: [40, 25],
@@ -86,7 +86,7 @@ function toggleEbikeVisibility(map) {
   const zoomLevel = map.getZoom();
 
   // Set threshold zoom level for visibility
-  const zoomThreshold = 12; // Adjust this based on your preference
+  const zoomThreshold = 7; // Adjust this based on your preference
 
   if (zoomLevel < zoomThreshold) {
     // If zoom is below threshold, remove ebikeLayer
