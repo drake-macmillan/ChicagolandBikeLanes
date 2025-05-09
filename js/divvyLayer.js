@@ -1,4 +1,3 @@
-// divvyLayer.js
 let divvyLayer = null;
 let ebikeLayer = null;
 
@@ -18,7 +17,6 @@ async function loadDivvyStations(map) {
     const stationStatus = (await statusRes.json()).data.stations;
     const freeBikeData = await freeBikeRes.json();
 
-    // Create a lookup table for station status
     const statusMap = {};
     stationStatus.forEach(station => {
       statusMap[station.station_id] = station;
@@ -27,30 +25,27 @@ async function loadDivvyStations(map) {
     if (divvyLayer) map.removeLayer(divvyLayer);
     if (ebikeLayer) map.removeLayer(ebikeLayer);
 
-    // Docked station markers
     divvyLayer = L.layerGroup(
       stationInfo.map(station => {
         const status = statusMap[station.station_id];
-        const bikes = status?.num_bikes_available ?? '?';
+
+        const totalBikes = (status?.num_bikes_available ?? 0) - (status?.num_bikes_reserved ?? 0);
+        const totalEbikes = (status?.num_ebikes_available ?? 0) - (status?.num_ebikes_reserved ?? 0);
+        const classicBikes = totalBikes - totalEbikes;
         const docks = status?.num_docks_available ?? '?';
-        const ebikes = status?.num_ebikes_available ?? 0;
-        const classicBikes = bikes - ebikes;
 
         const icon = L.divIcon({
           className: 'divvy-icon',
           html: `<div style="text-align:center; font-size: 10px; line-height:1.2;">
-                   🚲 ${bikes}<br>🅿️ ${docks}
+                   🚲 ${totalBikes}<br>🅿️ ${docks}
                  </div>`,
           iconSize: [40, 25],
-          shadowSize:   [50, 64],
-          iconAnchor: [20, 12],
-          shadowAnchor: [4, 62],
-
+          iconAnchor: [20, 12]
         });
 
         return L.marker([station.lat, station.lon], { icon }).bindPopup(
           `<strong>${station.name}</strong><br>
-           🛵 Electric Bikes: ${ebikes}<br>
+           🛵 Electric Bikes: ${totalEbikes}<br>
            🚲 Classic Bikes: ${classicBikes}<br>
            🅿️ Docks Available: ${docks}`
         );
@@ -58,7 +53,6 @@ async function loadDivvyStations(map) {
     );
     divvyLayer.addTo(map);
 
-    // Free-floating e-bikes
     ebikeLayer = L.layerGroup(
       freeBikeData.data.bikes
         .filter(bike => bike.is_reserved === 0 && bike.is_disabled === 0)
@@ -69,8 +63,7 @@ async function loadDivvyStations(map) {
               html: '🛵',
               iconSize: [10, 10]
             })
-          }).bindPopup(`<strong>Electric Bike</strong><br>Range: ${bike.current_range_meters ? (bike.current_range_meters / 1609.34).toFixed(1) + ' mi' : 'N/A'}<br>
-  Last Reported: ${bike.last_reported ? new Date(bike.last_reported * 1000).toLocaleString() : 'N/A'}<br>`)
+          }) // no popup to reduce mobile clutter
         )
     );
     ebikeLayer.addTo(map);
