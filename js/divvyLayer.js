@@ -95,7 +95,7 @@ async function loadDivvyStations(map) {
 
 function toggleStationVisibility(map) {
   const zoomLevel = map.getZoom();
-  const zoomThreshold = 14;
+  const zoomThreshold = 16;
 
   if (zoomLevel < zoomThreshold) {
     if (stationLayer && map.hasLayer(stationLayer)) map.removeLayer(stationLayer);
@@ -108,7 +108,7 @@ function toggleStationVisibility(map) {
 
 function toggleEbikeVisibility(map) {
   const zoomLevel = map.getZoom();
-  const zoomThreshold = 14;
+  const zoomThreshold = 16;
 
   if (zoomLevel < zoomThreshold) {
     if (ebikeLayer && map.hasLayer(ebikeLayer)) map.removeLayer(ebikeLayer);
