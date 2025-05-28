@@ -103,7 +103,7 @@ function handleZoomChange(e) {
 
 function toggleStationVisibility(map) {
   const zoomLevel = map.getZoom();
-  const zoomThreshold = 16;
+  const zoomThreshold = 15;
 
   if (zoomLevel < zoomThreshold) {
     if (stationLayer && map.hasLayer(stationLayer)) map.removeLayer(stationLayer);
@@ -116,7 +116,7 @@ function toggleStationVisibility(map) {
 
 function toggleEbikeVisibility(map) {
   const zoomLevel = map.getZoom();
-  const zoomThreshold = 16;
+  const zoomThreshold = 15;
 
   if (zoomLevel < zoomThreshold) {
     if (ebikeLayer && map.hasLayer(ebikeLayer)) map.removeLayer(ebikeLayer);
