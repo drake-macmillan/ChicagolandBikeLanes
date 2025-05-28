@@ -75,8 +75,8 @@ body, html {
 }
 .custom-dropdown {
   position: absolute;
-  top: 50px;
-  left: 0;
+  top: 40px;
+  left: 40px;
   background: white;
   border: 1px solid #ccc;
   border-radius: 6px;
