@@ -8,27 +8,6 @@ const geocoder = L.Control.geocoder('https://photon.komoot.io/api/', {
   )
 }).addTo(map);
 
-/*
-// Add persistent location button
-const locateControl = L.control.locate({
-  position: 'topleft',
-  drawCircle: true,
-  keepCurrentZoomLevel: true,
-  strings: {
-    title: "Show me where I am"
-  },
-  locateOptions: {
-    enableHighAccuracy: true
-  }
-}).addTo(map);
-
-// Trigger location request when searching
-geocoder.on('markgeocode', function (e) {
-  // Optional: just move map to the geocode result
-  map.setView(e.geocode.center, 14); // or any zoom level you want
-});
-*/
-
 // Custom button controls
 const buttonContainer = L.control({ position: 'topleft' });
 
@@ -49,9 +28,16 @@ buttonContainer.onAdd = function (map) {
   const legendIcon = L.DomUtil.create('img', '', legendBtn);
   legendIcon.src = 'images/infoicon.jpg';
   legendIcon.alt = 'Legend';
-  legendBtn.onclick = () => {
+  legendBtn.onclick = (e) => {
     const legend = document.getElementById('legend-popup');
-    legend.style.display = (legend.style.display === 'none') ? 'block' : 'none';
+    const isVisible = legend.style.display === 'block';
+    if (!isVisible) {
+      // Position the legend relative to the button
+      const rect = legendBtn.getBoundingClientRect();
+      legend.style.left = `${rect.right + 10}px`;
+      legend.style.top = `${rect.top}px`;
+    }
+    legend.style.display = isVisible ? 'none' : 'block';
   };
 
   // More Options Button
