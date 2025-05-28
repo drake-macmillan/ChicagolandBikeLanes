@@ -47,6 +47,12 @@ buttonContainer.onAdd = function (map) {
 
   const dropdown = L.DomUtil.create('div', 'custom-dropdown hidden', div);
 
+  const addDropdownSeparator = () => {
+    const hr = document.createElement('hr');
+    hr.className = 'dropdown-separator';
+    dropdown.appendChild(hr);
+  };
+  
   const addDropdownOption = (label, onClick, isToggle = false) => {
     const item = document.createElement('div');
     item.className = 'dropdown-item';
@@ -81,6 +87,8 @@ buttonContainer.onAdd = function (map) {
     console.log("Upcoming Projects toggled:", isOn);
     toggleCTAMetraLayer(map, isOn);
   }, true);
+
+  addDropdownSeparator();
   
   addDropdownOption("Open in Google Maps", () => {
     const center = map.getCenter();
@@ -90,8 +98,14 @@ buttonContainer.onAdd = function (map) {
   addDropdownOption("Open in Apple Maps", () => {
     const center = map.getCenter();
     window.open(`https://maps.apple.com/?q=${center.lat},${center.lng}`, '_blank');
-  }, true);
+  }, );
+
+  addDropdownSeparator();
   
+  addDropdownOption("Contact Me (coming soon)", () => {
+    console.log("Contact Me:", isOn);
+  }, true);
+    
   moreBtn.onclick = (e) => {
     e.stopPropagation();
     dropdown.classList.toggle('hidden');
