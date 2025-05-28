@@ -67,21 +67,31 @@ buttonContainer.onAdd = function (map) {
     dropdown.appendChild(item);
   };
 
-  addDropdownOption("Upcoming Projects", (isOn) => {
+  addDropdownOption("Upcoming Projects (coming soon)", (isOn) => {
     console.log("Upcoming Projects toggled:", isOn);
     toggleUpcomingProjectsLayer(map, isOn);
   }, true);
 
-  addDropdownOption("Chicago Ward Boundaries", (isOn) => {
+  addDropdownOption("Chicago Ward Boundaries (coming soon)", (isOn) => {
     console.log("Ward Boundaries toggled:", isOn);
     toggleWardBoundariesLayer(map, isOn);
   }, true);
-
+  
+  addDropdownOption("CTA/Metra Stations (coming soon)", (isOn) => {
+    console.log("Upcoming Projects toggled:", isOn);
+    toggleCTAMetraLayer(map, isOn);
+  }, true);
+  
   addDropdownOption("Open in Google Maps", () => {
     const center = map.getCenter();
     window.open(`https://www.google.com/maps?q=${center.lat},${center.lng}`, '_blank');
   });
-
+  
+  addDropdownOption("Open in Apple Maps", () => {
+    const center = map.getCenter();
+    window.open(`https://maps.apple.com/?q=${center.lat},${center.lng}`, '_blank');
+  }, true);
+  
   moreBtn.onclick = (e) => {
     e.stopPropagation();
     dropdown.classList.toggle('hidden');
