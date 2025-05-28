@@ -106,8 +106,11 @@ body, html {
 .divvy-icon-content {
   background: rgba(255, 255, 255, 0.85);
   border-radius: 6px;
-  padding: 2px 6px;
+  padding: 1px 4px;
   display: inline-block;
-  border: 1px solid #ccc;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  border: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;          /* keeps the text on one line */
+  width: auto;                  /* allow width to fit content */
+  max-width: none;              /* prevents it from constraining long text */
 }
