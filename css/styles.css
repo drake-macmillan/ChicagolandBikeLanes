@@ -103,3 +103,11 @@ body, html {
   display: none;
 }
 
+.divvy-icon-content {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 6px;
+  padding: 2px 6px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
