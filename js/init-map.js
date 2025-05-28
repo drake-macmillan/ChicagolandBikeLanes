@@ -9,28 +9,47 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
-// Attempt to locate the user and show their location on the map
+// Optional: expose the map globally if other scripts need to access it
+window.map = map;
+
+// Show user's live location with direction
 if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(
+  let userMarker;
+  const userIcon = L.divIcon({
+    className: 'user-location-icon',
+    html: `<div class="user-direction-dot"></div>`,
+    iconSize: [20, 20],
+    iconAnchor: [10, 10]
+  });
+
+  navigator.geolocation.watchPosition(
     (position) => {
-      const userLatLng = [position.coords.latitude, position.coords.longitude];
-      L.marker(userLatLng, {
-        title: "Your Location",
-        icon: L.icon({
-          iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
-          iconSize: [25, 41],
-          iconAnchor: [12, 41],
-        })
-      }).addTo(map);
-      map.setView(userLatLng, 14); // Zoom to user location
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude;
+      const heading = position.coords.heading;
+
+      if (!userMarker) {
+        userMarker = L.marker([lat, lng], { icon: userIcon }).addTo(map);
+        map.setView([lat, lng], 14);
+      } else {
+        userMarker.setLatLng([lat, lng]);
+      }
+
+      // Rotate the icon if heading is available
+      if (!isNaN(heading)) {
+        const dot = userMarker.getElement().querySelector('.user-direction-dot');
+        if (dot) dot.style.transform = `rotate(${heading}deg)`;
+      }
     },
     (error) => {
       console.warn("Geolocation failed or was denied:", error.message);
+    },
+    {
+      enableHighAccuracy: true,
+      maximumAge: 0,
+      timeout: 10000
     }
   );
 } else {
   console.warn("Geolocation is not supported by this browser.");
 }
-
-// Optional: expose the map globally if other scripts need to access it
-window.map = map;
