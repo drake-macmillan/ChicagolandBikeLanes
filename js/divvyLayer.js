@@ -39,7 +39,7 @@ async function loadDivvyStations(map) {
 
         const icon = L.divIcon({
           className: 'divvy-icon',
-          html: `<div style="text-align:center; font-size: 15px; line-height:1.2; white-space: nowrap;">
+          html: `<div class="divvy-icon-content">
                    🚲 ${totalBikes}<br>🅿️ ${docks}
                  </div>`,
           iconSize: [40, 25],
