@@ -114,3 +114,27 @@ body, html {
   width: auto;                  /* allow width to fit content */
   max-width: none;              /* prevents it from constraining long text */
 }
+.user-location-icon {
+  background: none;
+  border: none;
+}
+
+.user-direction-dot {
+  width: 16px;
+  height: 16px;
+  background: rgba(0, 122, 255, 0.9);
+  border-radius: 50%;
+  position: relative;
+}
+
+.user-direction-dot::after {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 6px;
+  width: 4px;
+  height: 8px;
+  background: rgba(0, 122, 255, 0.9);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  transform-origin: center bottom;
+}
