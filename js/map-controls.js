@@ -8,6 +8,7 @@ const geocoder = L.Control.geocoder('https://photon.komoot.io/api/', {
   )
 }).addTo(map);
 
+/*
 // Add persistent location button
 const locateControl = L.control.locate({
   position: 'topleft',
@@ -26,7 +27,7 @@ geocoder.on('markgeocode', function (e) {
   // Optional: just move map to the geocode result
   map.setView(e.geocode.center, 14); // or any zoom level you want
 });
-
+*/
 
 // Custom button controls
 const buttonContainer = L.control({ position: 'topleft' });
@@ -34,15 +35,7 @@ const buttonContainer = L.control({ position: 'topleft' });
 buttonContainer.onAdd = function (map) {
   const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control custom-control-container');
 
-  const googleBtn = L.DomUtil.create('button', 'custom-button', div);
-  const googleIcon = L.DomUtil.create('img', '', googleBtn);
-  googleIcon.src = 'images/google_maps_icon.webp';
-  googleIcon.alt = 'Google Maps';
-  googleBtn.onclick = () => {
-    const center = map.getCenter();
-    window.open(`https://www.google.com/maps?q=${center.lat},${center.lng}`, '_blank');
-  };
-
+  // Divvy Button
   const divvyBtn = L.DomUtil.create('button', 'custom-button', div);
   const divvyIcon = L.DomUtil.create('img', '', divvyBtn);
   divvyIcon.src = 'images/divvy_logo.jpg';
@@ -51,6 +44,7 @@ buttonContainer.onAdd = function (map) {
     toggleDivvyLayer(map);
   };
 
+  // Legend Button
   const legendBtn = L.DomUtil.create('button', 'custom-button', div);
   const legendIcon = L.DomUtil.create('img', '', legendBtn);
   legendIcon.src = 'images/infoicon.jpg';
@@ -60,8 +54,64 @@ buttonContainer.onAdd = function (map) {
     legend.style.display = (legend.style.display === 'none') ? 'block' : 'none';
   };
 
+  // More Options Button
+  const moreBtn = L.DomUtil.create('button', 'custom-button', div);
+  moreBtn.innerHTML = '&#9776;';
+  moreBtn.title = "More options";
+
+  const dropdown = L.DomUtil.create('div', 'custom-dropdown hidden', div);
+
+  const addDropdownOption = (label, onClick, isToggle = false) => {
+    const item = document.createElement('div');
+    item.className = 'dropdown-item';
+    item.textContent = label;
+    if (isToggle) {
+      item.dataset.active = "false";
+      item.onclick = () => {
+        item.dataset.active = item.dataset.active === "true" ? "false" : "true";
+        item.classList.toggle('active');
+        onClick(item.dataset.active === "true");
+      };
+    } else {
+      item.onclick = () => {
+        onClick();
+        dropdown.classList.add('hidden');
+      };
+    }
+    dropdown.appendChild(item);
+  };
+
+  addDropdownOption("Upcoming Projects", (isOn) => {
+    console.log("Upcoming Projects toggled:", isOn);
+    toggleUpcomingProjectsLayer(map, isOn);
+  }, true);
+
+  addDropdownOption("Chicago Ward Boundaries", (isOn) => {
+    console.log("Ward Boundaries toggled:", isOn);
+    toggleWardBoundariesLayer(map, isOn);
+  }, true);
+
+  addDropdownOption("Open in Google Maps", () => {
+    const center = map.getCenter();
+    window.open(`https://www.google.com/maps?q=${center.lat},${center.lng}`, '_blank');
+  });
+
+  moreBtn.onclick = (e) => {
+    e.stopPropagation();
+    dropdown.classList.toggle('hidden');
+  };
+
+  // Hide dropdown if clicking outside
+  document.addEventListener('click', (event) => {
+    if (!div.contains(event.target)) {
+      dropdown.classList.add('hidden');
+    }
+  });
+
   return div;
 };
 
 buttonContainer.addTo(map);
+
+
 
