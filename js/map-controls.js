@@ -78,7 +78,7 @@ buttonContainer.onAdd = function (map) {
     toggleUpcomingProjectsLayer(map, isOn);
   }, true);
 
-  addDropdownOption("Chicago Ward Boundaries (coming soon)", (isOn) => {
+  addDropdownOption("Chicago Ward Boundaries", (isOn) => {
     console.log("Ward Boundaries toggled:", isOn);
     toggleWardBoundariesLayer(map, isOn);
   }, true);
