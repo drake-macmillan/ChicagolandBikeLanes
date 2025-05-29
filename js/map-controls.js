@@ -1,3 +1,5 @@
+import { toggleWardBoundariesLayer } from './wardLayer.js';
+
 // Geocoder (search bar)
 const geocoder = L.Control.geocoder('https://photon.komoot.io/api/', {
   defaultMarkGeocode: true,
@@ -79,7 +81,6 @@ buttonContainer.onAdd = function (map) {
   }, true);
 
   addDropdownOption("Chicago Ward Boundaries", (isOn) => {
-    console.log("Ward Boundaries toggled:", isOn);
     toggleWardBoundariesLayer(map, isOn);
   }, true);
   
