@@ -6,7 +6,7 @@ const map = L.map('map', { zoomControl: false }).setView([41.8781, -87.6298], 13
 // Add OpenStreetMap tile layer
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19,
-  attribution: '&copy; OpenStreetMap contributors'
+  attribution: '&copy; OpenStreetMap contributors',
   opacity: 0.6  // 0 = fully transparent, 1 = fully opaque
 }).addTo(map);
 
