@@ -24,11 +24,11 @@
 
   <!-- Script Modules -->
   <script type="module">
-    import './js/style-rules.js';
+    import { getStyle } from './js/style-rules.js';
     import { map } from './js/init-map.js';
+    import { loadArrowLayer } from './js/map-controls.js';
     import './js/divvyLayer.js';
     import './js/wardLayer.js';
-    import './js/map-controls.js';
 
     // Add bikeway GeoJSON
     fetch('data/chicagoland_bikeways_10may25.geojson')
