@@ -7,7 +7,7 @@ const map = L.map('map', { zoomControl: false }).setView([41.8781, -87.6298], 13
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19,
   attribution: '&copy; OpenStreetMap contributors',
-  opacity: 0.6  // 0 = fully transparent, 1 = fully opaque
+  opacity: 0.5  // 0 = fully transparent, 1 = fully opaque
 }).addTo(map);
 
 // Optional: expose the map globally if other scripts need to access it
