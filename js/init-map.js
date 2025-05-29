@@ -53,3 +53,5 @@ if (navigator.geolocation) {
 } else {
   console.warn("Geolocation is not supported by this browser.");
 }
+
+export { map };
