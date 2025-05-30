@@ -14,6 +14,41 @@ function getStyle(feature) {
   return styles[type] || { color: "#AAAAAA", weight: 1 };
 }
 
+function addDirectionArrows(data, map) {
+  const decorators = [];
+
+  data.features.forEach(feature => {
+    const dir = feature.properties.oneway_direction;
+    if (!dir || feature.geometry.type !== "LineString") return;
+
+    const latlngs = feature.geometry.coordinates.map(c => [c[1], c[0]]);
+
+    const decorator = L.polylineDecorator(latlngs, {
+      patterns: [
+        {
+          offset: '10%', repeat: '20%',
+          symbol: L.Symbol.arrowHead({
+            pixelSize: 8,
+            polygon: false,
+            pathOptions: { color: '#555', weight: 2 }
+          })
+        }
+      ]
+    });
+
+    decorators.push(decorator);
+  });
+
+  decorators.forEach(d => d.addTo(map));
+}
+
+
+
+// all this stuff below will be eventually deleted
+// i have been handling one way trails by manually adding dots that render as arrows
+// currently i am adding code to stylistically add one way lines based on metadata
+// once that works I can delete all the below code
+
 function getArrowIcon(feature) {
   const label = feature.properties.label;
 
