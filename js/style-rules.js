@@ -19,6 +19,14 @@ function decorateIfOneWay(feature, layer) {
   if (feature.properties.br_oneway === "Y") {
     const color = getStyle(feature).color;
 
+    // Make sure layer._map is ready, fallback to global map variable
+    const mapInstance = layer._map || window.map;
+
+    if (!mapInstance) {
+      console.warn('Map instance not found for decorating polyline');
+      return;
+    }
+
     const decorator = L.polylineDecorator(layer, {
       patterns: [
         {
@@ -33,7 +41,7 @@ function decorateIfOneWay(feature, layer) {
       ]
     });
 
-    decorator.addTo(layer._map || layer._leaflet_map || map); // fallback if not directly attached yet
+    decorator.addTo(mapInstance);
   }
 }
 
