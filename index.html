@@ -55,6 +55,16 @@
     })
     .catch(err => console.error('Error loading GeoJSON:', err));
 
+// direction arrows update (in-line instead of points on map)
+// may 30 2025 update
+// will delete "direction arrow layer" section once this is confirmed working
+  
+  addDirectionArrows(data, map);
+})
+  .catch(err => console.error('Error loading GeoJSON:', err));
+    
+
+    
  //direction arrow layer
 loadArrowLayer(map);
   </script>
