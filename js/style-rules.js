@@ -14,40 +14,6 @@ function getStyle(feature) {
   return styles[type] || { color: "#AAAAAA", weight: 1 };
 }
 
-function addDirectionArrows(data, map) {
-  const decorators = [];
-
-  data.features.forEach(feature => {
-    // Only apply arrows to lines marked as one-way
-    if (feature.properties.br_oneway !== 'Y') return;
-    if (feature.geometry.type !== "LineString") return;
-
-    // Convert coordinates to Leaflet's [lat, lng] format
-    const latlngs = feature.geometry.coordinates.map(c => [c[1], c[0]]);
-
-    // Create the arrow decorator following the line direction
-    const decorator = L.polylineDecorator(latlngs, {
-      patterns: [
-        {
-          offset: '10%', repeat: '20%',
-          symbol: L.Symbol.arrowHead({
-            pixelSize: 8,
-            polygon: false,
-            pathOptions: { color: '#555', weight: 2 }
-          })
-        }
-      ]
-    });
-
-    decorators.push(decorator);
-  });
-
-  // Add all decorators to the map
-  decorators.forEach(d => d.addTo(map));
-}
-
-
-
 // all this stuff below will be eventually deleted
 // i have been handling one way trails by manually adding dots that render as arrows
 // currently i am adding code to stylistically add one way lines based on metadata
