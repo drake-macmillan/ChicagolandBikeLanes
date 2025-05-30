@@ -18,11 +18,14 @@ function addDirectionArrows(data, map) {
   const decorators = [];
 
   data.features.forEach(feature => {
-    const dir = feature.properties.oneway_direction;
-    if (!dir || feature.geometry.type !== "LineString") return;
+    // Only apply arrows to lines marked as one-way
+    if (feature.properties.br_oneway !== 'Y') return;
+    if (feature.geometry.type !== "LineString") return;
 
+    // Convert coordinates to Leaflet's [lat, lng] format
     const latlngs = feature.geometry.coordinates.map(c => [c[1], c[0]]);
 
+    // Create the arrow decorator following the line direction
     const decorator = L.polylineDecorator(latlngs, {
       patterns: [
         {
@@ -39,6 +42,7 @@ function addDirectionArrows(data, map) {
     decorators.push(decorator);
   });
 
+  // Add all decorators to the map
   decorators.forEach(d => d.addTo(map));
 }
 
