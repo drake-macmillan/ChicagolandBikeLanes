@@ -49,14 +49,19 @@
     .then(response => response.json())
     .then(data => {
       L.geoJSON(data, {
-        style: getStyle                   //calls function from style-rules.js
+        style: getStyle,
+        onEachFeature: function (feature, layer) {
+          decorateIfOneWay(feature, layer); // calls the decorator if br_oneway === "Y"
+        }
       }).addTo(map);
     
- //direction arrow layer
+ //direction arrow layer (will delete this once the decorateIfOneWay function works)
 loadArrowLayer(map);
   });
   </script>
 
+  //LEGEND STYLING
+  
 <div id="legend-popup" style="display: none;">
   <div><span class="legend-line" style="background-color: navy; height: 5px; width: 20px;"></span>Paved Trail</div>
   <div><span class="legend-line" style="background-color: blue; height: 4px; width: 20px;"></span>Protected Bike Lane</div>
