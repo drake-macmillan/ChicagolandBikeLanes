@@ -60,7 +60,16 @@
 // may 30 2025 update
 // will delete "direction arrow layer" section once this is confirmed working
   
+  //addDirectionArrows(data, map);
+      // i commented out this part because chatGPT said that the function might have been called before the plugin is actually loaded,
+      // the below if statement is supposed to check for this
+
+if (typeof L.Symbol?.arrowHead === 'function') {
   addDirectionArrows(data, map);
+} else {
+  console.error("L.Symbol.arrowHead is not available. Direction arrows not added.");
+}
+      
 })
   .catch(err => console.error('Error loading GeoJSON:', err));
     
