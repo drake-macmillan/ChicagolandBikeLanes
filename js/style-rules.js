@@ -14,38 +14,6 @@ function getStyle(feature) {
   return styles[type] || { color: "#AAAAAA", weight: 1 };
 }
 
-// Function to decorate lines with arrows for one-way segments
-function decorateIfOneWay(feature, layer) {
-  if (feature.properties.br_oneway === "Y") {
-    const color = getStyle(feature).color;
-
-    // Make sure layer._map is ready, fallback to global map variable
-    const mapInstance = layer._map || window.map;
-
-    if (!mapInstance) {
-      console.warn('Map instance not found for decorating polyline');
-      return;
-    }
-
-    const decorator = L.polylineDecorator(layer, {
-      patterns: [
-        {
-          offset: '5%',
-          repeat: '10%',
-          symbol: L.Symbol.arrowHead({
-            pixelSize: 10,
-            polygon: false,
-            pathOptions: { stroke: true, color: color }
-          })
-        }
-      ]
-    });
-
-    decorator.addTo(mapInstance);
-  }
-}
-
-
 // all this stuff below will be eventually deleted
 // i have been handling one way trails by manually adding dots that render as arrows
 // currently i am adding code to stylistically add one way lines based on metadata
