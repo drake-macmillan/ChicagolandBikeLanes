@@ -50,9 +50,6 @@
     .then(data => {
       L.geoJSON(data, {
         style: getStyle,
-        onEachFeature: function (feature, layer) {
-          decorateIfOneWay(feature, layer); // calls the decorator if br_oneway === "Y"
-        }
       }).addTo(map);
     
  //direction arrow layer (will delete this once the decorateIfOneWay function works)
