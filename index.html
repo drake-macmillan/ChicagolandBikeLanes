@@ -25,9 +25,6 @@
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-  <!-- Leaflet polyline decorator plugin JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.polylinedecorator/1.6.0/leaflet.polylineDecorator.min.js"></script>
-
   <!-- styling JS -->
   <script src="js/style-rules.js"></script>
   
@@ -55,25 +52,6 @@
       L.geoJSON(data, {
         style: getStyle                   //calls function from style-rules.js
       }).addTo(map);
-
-// direction arrows update (in-line instead of points on map)
-// may 30 2025 update
-// will delete "direction arrow layer" section once this is confirmed working
-  
-  //addDirectionArrows(data, map);
-      // i commented out this part because chatGPT said that the function might have been called before the plugin is actually loaded,
-      // the below if statement is supposed to check for this
-
-if (typeof L.Symbol?.arrowHead === 'function') {
-  addDirectionArrows(data, map);
-} else {
-  console.error("L.Symbol.arrowHead is not available. Direction arrows not added.");
-}
-      
-})
-  .catch(err => console.error('Error loading GeoJSON:', err));
-    
-
     
  //direction arrow layer
 loadArrowLayer(map);
