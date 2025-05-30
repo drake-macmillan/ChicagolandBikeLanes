@@ -43,8 +43,7 @@
   <!-- Add map control buttons -->
   <script src="js/map-controls.js"></script>
   
-  <script>
-   
+<script>  
     //bike lane map layer
   fetch('data/chicagoland_bikeways_10may25.geojson')
     .then(response => response.json())
@@ -55,6 +54,7 @@
     
  //direction arrow layer
 loadArrowLayer(map);
+  });
   </script>
 
 <div id="legend-popup" style="display: none;">
