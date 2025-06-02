@@ -1,4 +1,4 @@
-function addMapControls(map){
+export function addMapControls(map){
   
 // Geocoder (search bar)
 const geocoder = L.Control.geocoder('https://photon.komoot.io/api/', {
