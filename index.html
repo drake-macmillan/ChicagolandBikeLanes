@@ -6,66 +6,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Leaflet CSS -->
-  
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <!-- Geocoder CSS -->
-  
   <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-  <!-- LocateControl CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
-  
-  <!-- custom styling CSS-->
   <link rel="stylesheet" href="css/styles.css" />
-
 </head>
 <body>
   <div id="map"></div>
-  
-  <!-- Leaflet JS -->
+
+  <!-- Leaflet and plugins -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  
-  <!-- styling JS -->
-  <script src="js/style-rules.js"></script>
-  
-  <!-- Geocoder JS -->
   <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-  
-  <!-- Load Leaflet LocateControl plugin -->
   <script src="https://unpkg.com/leaflet.locatecontrol/dist/L.Control.Locate.min.js"></script>
 
-  <!-- Initiate map -->
-  <script src="js/init-map.js"></script>
+  <!-- Load main module script -->
+  <script type="module" src="js/main.js"></script>
 
-  <!-- Divvy station layer logic -->
-  <script src="js/divvyLayer.js"></script>
-  
-  <!-- Add map control buttons -->
-  <script src="js/map-controls.js"></script>
-
-  <!-- MAIN ORCHESTRATOR -->
-  <script src="js/main.js"></script>
-
-<!--commenting this out because i moved it to the main.js function
-<script>  
-    //bike lane map layer
-  fetch('data/chicagoland_bikeways_10may25.geojson')
-    .then(response => response.json())
-    .then(data => {
-      L.geoJSON(data, {
-        style: getStyle,
-      }).addTo(map);
-    });
-  </script>
- -->
-  //LEGEND STYLING
-  
-<div id="legend-popup" style="display: none;">
-  <div><span class="legend-line" style="background-color: navy; height: 5px; width: 20px;"></span>Paved Trail</div>
-  <div><span class="legend-line" style="background-color: blue; height: 4px; width: 20px;"></span>Protected Bike Lane</div>
-  <div><span class="legend-line" style="background: repeating-linear-gradient(to right, blue, blue 4px, transparent 4px, transparent 8px); height: 4px; width: 20px;"></span>Chill Side Street</div>
-  <div><span class="legend-line" style="background: repeating-linear-gradient(to right, orange, orange 4px, transparent 4px, transparent 8px); height: 4px; width: 20px;"></span>Painted Bike Lane, Large</div>
-  <div><span class="legend-line" style="background: repeating-linear-gradient(to right, orange, orange 4px, transparent 4px, transparent 8px); height: 1.5px; width: 20px;"></span>Painted Bike Lane, Small</div>
-</div>
- 
+  <!-- Legend styling -->
+  <div id="legend-popup" style="display: none;">
+    <div><span class="legend-line" style="background-color: navy; height: 5px; width: 20px;"></span>Paved Trail</div>
+    <div><span class="legend-line" style="background-color: blue; height: 4px; width: 20px;"></span>Protected Bike Lane</div>
+    <div><span class="legend-line" style="background: repeating-linear-gradient(to right, blue, blue 4px, transparent 4px, transparent 8px); height: 4px; width: 20px;"></span>Chill Side Street</div>
+    <div><span class="legend-line" style="background: repeating-linear-gradient(to right, orange, orange 4px, transparent 4px, transparent 8px); height: 4px; width: 20px;"></span>Painted Bike Lane, Large</div>
+    <div><span class="legend-line" style="background: repeating-linear-gradient(to right, orange, orange 4px, transparent 4px, transparent 8px); height: 1.5px; width: 20px;"></span>Painted Bike Lane, Small</div>
+  </div>
 </body>
 </html>
