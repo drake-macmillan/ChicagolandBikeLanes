@@ -3,7 +3,7 @@ let ebikeLayer = null;
 let dotLayer = null;
 let divvyLayerEnabled = false;
 
-async function loadDivvyStations(map) {
+export async function loadDivvyStations(map) {
   const infoURL = 'https://gbfs.divvybikes.com/gbfs/en/station_information.json';
   const statusURL = 'https://gbfs.divvybikes.com/gbfs/en/station_status.json';
   const freeBikeURL = 'https://gbfs.divvybikes.com/gbfs/en/free_bike_status.json';
@@ -93,7 +93,7 @@ async function loadDivvyStations(map) {
   }
 }
 
-function handleZoomChange(e) {
+export function handleZoomChange(e) {
   const map = e.target;
   if (divvyLayerEnabled) {
     toggleStationVisibility(map);
@@ -101,7 +101,7 @@ function handleZoomChange(e) {
   }
 }
 
-function toggleStationVisibility(map) {
+export function toggleStationVisibility(map) {
   const zoomLevel = map.getZoom();
   const zoomThreshold = 15;
 
@@ -114,7 +114,7 @@ function toggleStationVisibility(map) {
   }
 }
 
-function toggleEbikeVisibility(map) {
+export function toggleEbikeVisibility(map) {
   const zoomLevel = map.getZoom();
   const zoomThreshold = 15;
 
@@ -125,7 +125,7 @@ function toggleEbikeVisibility(map) {
   }
 }
 
-function toggleDivvyLayer(map) {
+export function toggleDivvyLayer(map) {
   const isVisible =
     (stationLayer && map.hasLayer(stationLayer)) ||
     (dotLayer && map.hasLayer(dotLayer)) ||
