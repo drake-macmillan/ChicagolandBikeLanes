@@ -1,5 +1,5 @@
 // js/style-rules.js
-function getStyle(feature) {
+export function getStyle(feature) {
   const type = feature.properties.displayrou;
 
   const styles = {
