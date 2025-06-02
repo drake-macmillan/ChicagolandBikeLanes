@@ -73,9 +73,8 @@ buttonContainer.onAdd = function (map) {
     dropdown.appendChild(item);
   };
 
-  addDropdownOption("Upcoming Projects (coming soon)", (isOn) => {
-    console.log("Upcoming Projects toggled:", isOn);
-    toggleUpcomingProjectsLayer(map, isOn);
+  addDropdownOption("Upcoming Projects (testing as DivvyButton for now", (isOn) => {
+   toggleDivvyLayer(map);
   }, true);
 
   addDropdownOption("Chicago Ward Boundaries (coming soon)", (isOn) => {
