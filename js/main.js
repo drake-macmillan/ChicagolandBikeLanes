@@ -1,16 +1,22 @@
+import { map } from './init-map.js';
+import { addMapControls } from './map-controls.js';
+import { getStyle } from './style-rules.js';
+import { loadDivvyStations } from './divvyLayer.js';
+
 function loadBikeLanes() {
   fetch('data/chicagoland_bikeways_10may25.geojson')
     .then(response => response.json())
     .then(data => {
       L.geoJSON(data, {
         style: getStyle,
-      }).addTo(map); // map comes from init-map.js
+      }).addTo(map);
     });
 }
 
 function main(){
   loadBikeLanes();
   addMapControls(map);
+  loadDivvyStations(map);
 }
 
 main();
