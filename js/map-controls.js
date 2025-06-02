@@ -1,3 +1,5 @@
+import { toggleWardLayerWithLoad } from './wardLayer.js';
+
 export function addMapControls(map){
   
 // Geocoder (search bar)
@@ -79,10 +81,9 @@ buttonContainer.onAdd = function (map) {
    toggleDivvyLayer(map);
   }, true);
 
-  addDropdownOption("Chicago Ward Boundaries (coming soon)", (isOn) => {
-    console.log("Ward Boundaries toggled:", isOn);
-    toggleWardBoundariesLayer(map, isOn);
-  }, true);
+  addDropdownOption("Chicago Ward Boundaries", (isOn) => {
+    toggleWardLayerWithLoad(map);
+  });
   
   addDropdownOption("CTA/Metra Stations (coming soon)", (isOn) => {
     console.log("Upcoming Projects toggled:", isOn);
