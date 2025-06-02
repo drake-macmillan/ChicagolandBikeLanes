@@ -8,4 +8,9 @@ function loadBikeLanes() {
     });
 }
 
-loadBikeLanes();
+function main(){
+  loadBikeLanes();
+  addMapControls(map);
+}
+
+main();
