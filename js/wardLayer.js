@@ -1,8 +1,8 @@
 let wardLayerEnabled = false;
-let wardLayer; // Make sure this is defined globally
+let wardLayer;
 
 async function loadWardBoundaries(map) {
-  const geojsonURL = './ward_boundaries_2024.geojson'; // Relative path
+  const geojsonURL = './ward_boundaries_2024.geojson';
 
   try {
     const res = await fetch(geojsonURL);
@@ -22,25 +22,25 @@ async function loadWardBoundaries(map) {
         const ward = feature.properties?.ward ?? 'Unknown';
         layer.bindPopup(`<strong>Ward ${ward}</strong>`);
       }
-    }).addTo(map);
-
-    wardLayerEnabled = true;
+    });
 
   } catch (err) {
     console.error('Error loading ward boundaries:', err);
   }
 }
 
-function toggleWardLayer(map) {
-  const isVisible = map.hasLayer(wardLayer);
+// 🔧 New simplified public function
+export async function toggleWardLayerWithLoad(map) {
+  const isVisible = wardLayer && map.hasLayer(wardLayer);
 
   if (isVisible) {
     map.removeLayer(wardLayer);
     wardLayerEnabled = false;
   } else {
     if (!wardLayer) {
-      loadWardBoundaries(map);
-    } else {
+      await loadWardBoundaries(map);
+    }
+    if (wardLayer) {
       map.addLayer(wardLayer);
       wardLayerEnabled = true;
     }
