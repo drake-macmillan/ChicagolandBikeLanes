@@ -83,8 +83,8 @@ buttonContainer.onAdd = function (map) {
   }, true);
 
   addDropdownOption("Chicago Ward Boundaries", (isOn) => {
-    loadWardBoundaries(map);
-  });
+    toggleWardLayer(map);
+  }, true);
   
   addDropdownOption("CTA/Metra Stations (coming soon)", (isOn) => {
     console.log("Upcoming Projects toggled:", isOn);
