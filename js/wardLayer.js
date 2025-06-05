@@ -50,7 +50,7 @@ export function toggleWardLayer(map, isOn) {
         style: {
           color: '#9fa8b3', //grey
           weight: 1.5,
-          opacity: 0.25,
+          opacity: .5,
           fillColor: '#9fa8b3', //grey
           fillOpacity: 0.15
         },
