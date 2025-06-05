@@ -1,7 +1,7 @@
 let wardLayerEnabled = false;
 let wardLayer;
 
-async function loadWardBoundaries(map) {
+export async function loadWardBoundaries(map) {
   const geojsonURL = './ward_boundaries_2024.geojson';
 
   try {
@@ -26,23 +26,5 @@ async function loadWardBoundaries(map) {
 
   } catch (err) {
     console.error('Error loading ward boundaries:', err);
-  }
-}
-
-// 🔧 New simplified public function
-export async function toggleWardLayerWithLoad(map) {
-  const isVisible = wardLayer && map.hasLayer(wardLayer);
-
-  if (isVisible) {
-    map.removeLayer(wardLayer);
-    wardLayerEnabled = false;
-  } else {
-    if (!wardLayer) {
-      await loadWardBoundaries(map);
-    }
-    if (wardLayer) {
-      map.addLayer(wardLayer);
-      wardLayerEnabled = true;
-    }
   }
 }
