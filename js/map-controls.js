@@ -1,4 +1,5 @@
 import { toggleWardLayerWithLoad } from './wardLayer.js';
+import { toggleDivvyLayer } from './divvyLayer.js';
 
 export function addMapControls(map){
   
