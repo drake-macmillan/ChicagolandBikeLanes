@@ -1,14 +1,14 @@
 let wardLayerEnabled = false;
 let wardLayer;
 
-export function toggleWardLayer(map) {
+export function toggleWardLayer(map, isOn) {
   // Remove the layer if it's already active
-  if (wardLayerEnabled && wardLayer) {
-    map.removeLayer(wardLayer);
+  if (!isOn) {
+    if (wardLayer) map.removeLayer(wardLayer);
     wardLayerEnabled = false;
     return;
   }
-
+  
   // Load and add the layer
   fetch('data/ward_boundaries_2024.geojson')
     .then(response => {
@@ -37,10 +37,10 @@ export function toggleWardLayer(map) {
 
       wardLayer = L.geoJSON(data, {
         style: {
-          color: '#007BFF',
+          color: '#9fa8b3',
           weight: 1.5,
-          opacity: 0.5,
-          fillColor: '#007BFF',
+          opacity: 0.1,
+          fillColor: '#9fa8b3',
           fillOpacity: 0.05
         },
         onEachFeature: function (feature, layer) {
