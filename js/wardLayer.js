@@ -34,8 +34,10 @@ export function toggleWardLayer(map, isOn) {
         selectedFeature = e.target;
 
         selectedFeature.setStyle({
-          weight: 3,
           color: '#003f88', //blue
+          weight: 3,
+          opacity: 0.5,
+          fillColor: '#003f88', //blue
           fillOpacity: 0.3
         });
 
