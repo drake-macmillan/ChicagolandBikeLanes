@@ -1,4 +1,4 @@
-import { toggleWardLayerWithLoad } from './wardLayer.js';
+import { loadWardBoundaries } from './wardLayer.js';
 import { toggleDivvyLayer } from './divvyLayer.js';
 
 export function addMapControls(map){
@@ -83,7 +83,7 @@ buttonContainer.onAdd = function (map) {
   }, true);
 
   addDropdownOption("Chicago Ward Boundaries", (isOn) => {
-    toggleWardLayerWithLoad(map);
+    loadWardBoundaries(map);
   });
   
   addDropdownOption("CTA/Metra Stations (coming soon)", (isOn) => {
