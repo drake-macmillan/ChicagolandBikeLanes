@@ -78,7 +78,7 @@ buttonContainer.onAdd = function (map) {
     dropdown.appendChild(item);
   };
 
-  addDropdownOption("Upcoming Projects (testing as DivvyButton for now", (isOn) => {
+  addDropdownOption('<span style="color: red;">Upcoming Projects</span>', (isOn) => {
    toggleDivvyLayer(map);
   }, true);
 
@@ -86,7 +86,7 @@ buttonContainer.onAdd = function (map) {
     toggleWardLayer(map, isOn);
   }, true);
   
-  addDropdownOption("CTA/Metra Stations (coming soon)", (isOn) => {
+  addDropdownOption('<span style="color: red;">CTA/Metra</span>', (isOn) => {
     console.log("Upcoming Projects toggled:", isOn);
     toggleCTAMetraLayer(map, isOn);
   }, true);
@@ -105,7 +105,7 @@ buttonContainer.onAdd = function (map) {
 
   addDropdownSeparator();
   
-  addDropdownOption("Contact Me (coming soon)", () => {
+  addDropdownOption('<span style="color: red;">Contact Me</span>', () => {
     console.log("Contact Me:", isOn);
   }, true);
     
