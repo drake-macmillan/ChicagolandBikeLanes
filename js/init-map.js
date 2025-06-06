@@ -18,10 +18,16 @@ if (navigator.geolocation) {
   let userMarker;
   const userIcon = L.divIcon({
     className: 'user-location-icon',
-    html: `<div class="user-direction-dot"></div>`,
-    iconSize: [20, 20],
-    iconAnchor: [10, 10]
+    html: `
+      <div class="user-direction-container">
+        <div class="flashlight"></div>
+        <div class="user-dot"></div>
+      </div>
+    `,
+    iconSize: [40, 40],
+    iconAnchor: [20, 20]
   });
+
 
   navigator.geolocation.watchPosition(
     (position) => {
@@ -36,10 +42,10 @@ if (navigator.geolocation) {
         userMarker.setLatLng([lat, lng]);
       }
 
-      // Rotate the icon if heading is available
+      // Rotate the flashlight if heading is available
       if (!isNaN(heading)) {
-        const dot = userMarker.getElement().querySelector('.user-direction-dot');
-        if (dot) dot.style.transform = `rotate(${heading}deg)`;
+        const flashlight = userMarker.getElement().querySelector('.flashlight');
+        if (flashlight) flashlight.style.transform = `translateX(-50%) rotate(${heading}deg)`;
       }
     },
     (error) => {
