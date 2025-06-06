@@ -44,8 +44,8 @@ if (navigator.geolocation) {
 
       // Rotate the flashlight if heading is available
       if (!isNaN(heading)) {
-        const flashlight = userMarker.getElement().querySelector('.flashlight');
-        if (flashlight) flashlight.style.transform = `translateX(-50%) rotate(${heading}deg)`;
+        const flashlight = userMarker.getElement()?.querySelector('.flashlight');
+        if (flashlight) flashlight.style.transform = `translate(-50%, -100%) rotate(${heading}deg)`;
       }
     },
     (error) => {
