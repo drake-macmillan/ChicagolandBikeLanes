@@ -24,8 +24,8 @@ if (navigator.geolocation) {
         <div class="user-dot"></div>
       </div>
     `,
-    iconSize: [40, 40],
-    iconAnchor: [20, 20]
+    iconSize: [30, 30],
+    iconAnchor: [15, 15]
   });
 
 
