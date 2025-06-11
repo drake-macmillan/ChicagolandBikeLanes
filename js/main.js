@@ -11,6 +11,7 @@ function loadBikeLanes() {
         style: getStyle,
         onEachFeature: (feature, layer) => {
           addDirectionArrows(feature, layer, map);
+        }
       }).addTo(map);
     });
 }
