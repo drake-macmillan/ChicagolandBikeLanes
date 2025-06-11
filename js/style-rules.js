@@ -8,7 +8,8 @@ export function getStyle(feature) {
     "Painted Lane":               { color: "#e05b1d", weight: 1.5, dashArray: "4,8" },
     "2-way Mellow Route/Greenway":{ color: "#2547cf", weight: 3, dashArray: "4,4" },
     "1-way Mellow Route/Greenway":{ color: "#2547cf", weight: 2, dashArray: "4,4" },
-    "Off-Street Trail/Path":      { color: "#000080", weight: 4.5, dashArray: null },
+    "Paved Trail":                { color: "#000080", weight: 4.5, dashArray: null },
+    "Unpaved Trail":              { color: "#5A4B49", weight: 4.5, dashArray: null },
   };
 
   return styles[type] || { color: "#AAAAAA", weight: 1 };
