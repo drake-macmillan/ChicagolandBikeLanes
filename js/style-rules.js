@@ -19,8 +19,7 @@ export function addDirectionArrows(feature, layer, map) {
   try {
     if (
       feature.properties.br_oneway !== 'Y' ||
-      feature.geometry.type !== 'LineString' ||
-      typeof L?.Symbol?.arrowHead !== 'function'
+      feature.geometry.type !== 'LineString'
     ) {
       return;
     }
@@ -30,27 +29,33 @@ export function addDirectionArrows(feature, layer, map) {
       L.latLng(lat, lng)
     );
 
-    const decorator = L.polylineDecorator(latlngs, {
-      patterns: [
-        {
-          offset: 0,
-          repeat: '50px',
-          symbol: L.Symbol.arrowHead({
-            pixelSize: 8,
-            polygon: false,
-            pathOptions: {
-              stroke: true,
-              color: color,
-              weight: 2,
-              opacity: 0.8,
-            },
-          }),
-        },
-      ],
+    // Create the polyline and add it to the map
+    const line = L.polyline(latlngs, {
+      color: color,
+      weight: 2,
+      opacity: 0 // hide the base line since it's already drawn via geoJSON
+    }).addTo(map);
+
+    // Add the arrow decorator
+    const arrowHead = L.polylineDecorator(line, {
+      patterns: [{
+        offset: '100%',
+        repeat: 0,
+        symbol: L.Symbol.arrowHead({
+          pixelSize: 15,
+          polygon: false,
+          pathOptions: {
+            stroke: true,
+            color: color,
+            weight: 2
+          }
+        })
+      }]
     });
 
-    decorator.addTo(map);
+    arrowHead.addTo(map);
   } catch (error) {
     console.warn('Arrow rendering failed for a feature:', error);
   }
 }
+
