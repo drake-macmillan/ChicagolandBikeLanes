@@ -14,3 +14,32 @@ export function getStyle(feature) {
 
   return styles[type] || { color: "#AAAAAA", weight: 1 };
 }
+
+export function addDirectionArrows(feature, layer, map) {
+  if (feature.properties.br_oneway !== 'Y' || feature.geometry.type !== 'LineString') return;
+
+  const color = getStyle(feature).color;
+
+  const latlngs = feature.geometry.coordinates.map(([lng, lat]) => L.latLng(lat, lng));
+
+  const decorator = L.polylineDecorator(latlngs, {
+    patterns: [
+      {
+        offset: 0,
+        repeat: '50px',
+        symbol: L.Symbol.arrowHead({
+          pixelSize: 8,
+          polygon: false,
+          pathOptions: {
+            stroke: true,
+            color: color,
+            weight: 2,
+            opacity: 0.8
+          }
+        })
+      }
+    ]
+  });
+
+  decorator.addTo(map);
+}
