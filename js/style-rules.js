@@ -14,3 +14,38 @@ export function getStyle(feature) {
 
   return styles[type] || { color: "#AAAAAA", weight: 1 };
 }
+
+export function addDirectionArrows(feature, map) {
+  if (feature.properties.br_oneway !== 'Y' || feature.geometry.type !== 'LineString') return;
+
+  const coords = feature.geometry.coordinates;
+  const color = getStyle(feature).color;
+
+  const arrowSpacing = 5; // approx. every 5th point
+  const arrowSize = 0.00005; // smaller = shorter arrow lines
+
+  for (let i = 1; i < coords.length; i += arrowSpacing) {
+    const [x1, y1] = coords[i - 1];
+    const [x2, y2] = coords[i];
+    const angle = Math.atan2(y2 - y1, x2 - x1);
+    const tip = L.latLng(y2, x2);
+
+    const leftWing = L.latLng(
+      y2 - arrowSize * Math.sin(angle - Math.PI / 6),
+      x2 - arrowSize * Math.cos(angle - Math.PI / 6)
+    );
+    const rightWing = L.latLng(
+      y2 - arrowSize * Math.sin(angle + Math.PI / 6),
+      x2 - arrowSize * Math.cos(angle + Math.PI / 6)
+    );
+
+    const arrow = L.polyline([leftWing, tip, rightWing], {
+      color: color,
+      weight: 2,
+      interactive: false,
+      pane: 'shadowPane' // draw arrows under labels if any
+    });
+
+    arrow.addTo(map);
+  }
+}
