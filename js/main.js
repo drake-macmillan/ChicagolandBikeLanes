@@ -1,6 +1,6 @@
 import { map } from './init-map.js';
 import { addMapControls } from './map-controls.js';
-import { getStyle, addDirectionArrows } from './style-rules.js';
+import { getStyle } from './style-rules.js';
 import { loadDivvyStations } from './divvyLayer.js';
 
 function loadBikeLanes() {
@@ -9,9 +9,6 @@ function loadBikeLanes() {
     .then(data => {
       L.geoJSON(data, {
         style: getStyle,
-        onEachFeature: (feature, layer) => {
-          addDirectionArrows(feature, layer, map);
-        }
       }).addTo(map);
     });
 }
