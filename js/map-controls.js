@@ -86,11 +86,16 @@ buttonContainer.onAdd = function (map) {
     toggleWardLayer(map, isOn);
   }, true);
   
-  addDropdownOption("(CTA/Metra)", (isOn) => {
+  addDropdownOption("(CTA Trains)", (isOn) => {
     console.log("Upcoming Projects toggled:", isOn);
-    toggleCTAMetraLayer(map, isOn);
+    toggleCTALayer(map, isOn);
   }, true);
-
+  
+  addDropdownOption("(Metra Trains)", (isOn) => {
+    console.log("Upcoming Projects toggled:", isOn);
+    toggleMetraLayer(map, isOn);
+  }, true);
+  
   addDropdownSeparator();
   
   addDropdownOption("Open in Google Maps", () => {
@@ -104,8 +109,18 @@ buttonContainer.onAdd = function (map) {
   }, );
 
   addDropdownSeparator();
+
+  addDropdownOption("🤷‍♂️ About this map", () => {
+    window.location.href = 'about.html';
+  }, true);
+
+  addDropdownSeparator();
   
-  addDropdownOption("(Contact Me)", () => {
+  addDropdownOption("📧 E-mail me", () => {
+  window.location.href = 'mailto:drake.t.macmillan+map@gmail.com?subject=Map%20Feedback';
+  }, true);
+
+  addDropdownOption("❤️ (Donate)", () => {
     console.log("Contact Me:", isOn);
   }, true);
     
