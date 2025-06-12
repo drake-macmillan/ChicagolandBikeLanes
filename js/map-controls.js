@@ -112,17 +112,17 @@ buttonContainer.onAdd = function (map) {
 
   addDropdownOption("🤷‍♂️ About this map", () => {
     window.location.href = 'about.html';
-  }, true);
+  }, );
 
   addDropdownSeparator();
   
   addDropdownOption("📧 E-mail me", () => {
   window.location.href = 'mailto:drake.t.macmillan+map@gmail.com?subject=Map%20Feedback';
-  }, true);
+  }, );
 
   addDropdownOption("❤️ Donate", () => {
     window.open(`https://ko-fi.com/drakemacmillan`, '_blank');
-  }, true);
+  }, );
     
   moreBtn.onclick = (e) => {
     e.stopPropagation();
