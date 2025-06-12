@@ -9,8 +9,9 @@ export function getStyle(feature) {
     "Protected Bike Lane":        { color: "#2547cf", weight: 4, dashArray: null },
     "Painted Lane, Large":        { color: "#e05b1d", weight: 3.5, dashArray: "4,8" },
     "Painted Lane":               { color: "#e05b1d", weight: 1.5, dashArray: "4,8" },
-    "2-way Mellow Route/Greenway":{ color: "#2547cf", weight: 3, dashArray: "4,4" },
-    "1-way Mellow Route/Greenway":{ color: "#2547cf", weight: 2, dashArray: "4,4" },
+    "2-way Mellow Route/Greenway":{ color: "#2547cf", weight: 3, dashArray: "4,4" }, //will delete once I confirm new format works
+    "1-way Mellow Route/Greenway":{ color: "#2547cf", weight: 2, dashArray: "4,4" },  //will delete once I confirm new format works
+    "Chill Side Street":          { color: "#2547cf", weight: 2.5, dashArray: "4,4" },
     "Paved Trail":                { color: "#000080", weight: 4.5, dashArray: null },
     "Unpaved Trail":              { color: "#5A4B49", weight: 4.5, dashArray: null },
   };
