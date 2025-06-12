@@ -16,7 +16,7 @@ function loadBikeLanes() {
 */
 
 function loadBikeLanes() {
-  fetch('data/chicagoland_bikeways_jun10.geojson')
+  fetch('data/chicagoland_bikeways_jun10_edit.geojson')
     .then(response => response.json())
     .then(data => {
       L.geoJSON(data, {
