@@ -120,8 +120,8 @@ buttonContainer.onAdd = function (map) {
   window.location.href = 'mailto:drake.t.macmillan+map@gmail.com?subject=Map%20Feedback';
   }, true);
 
-  addDropdownOption("❤️ (Donate)", () => {
-    console.log("Contact Me:", isOn);
+  addDropdownOption("❤️ Donate", () => {
+    window.open(`https://ko-fi.com/drakemacmillan`, '_blank');
   }, true);
     
   moreBtn.onclick = (e) => {
