@@ -3,20 +3,8 @@ import { addMapControls } from './map-controls.js';
 import { getStyle } from './style-rules.js';
 import { loadDivvyStations } from './divvyLayer.js';
 
-/*
 function loadBikeLanes() {
   fetch('data/chicagoland_bikeways_june13.geojson')
-    .then(response => response.json())
-    .then(data => {
-      L.geoJSON(data, {
-        style: getStyle,
-      }).addTo(map);
-    });
-}
-*/
-
-function loadBikeLanes() {
-  fetch('data/chicagoland_bikeways_jun10_edit.geojson')
     .then(response => response.json())
     .then(data => {
       L.geoJSON(data, {
