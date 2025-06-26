@@ -28,6 +28,12 @@ export function getStyle(feature) {
   return baseStyle;
 }
 
+// Add red shadow for under construction //testing this out
+  if (status === 'under construction') {
+    baseStyle.shadowColor = 'red';
+    baseStyle.shadowBlur = 10;
+  }
+
 // Custom Canvas Renderer with Arrow Support
 const ArrowRenderer = L.Canvas.extend({
   _updatePoly: function(layer, closed) {
