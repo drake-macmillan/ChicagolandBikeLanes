@@ -49,7 +49,7 @@ const ArrowRenderer = L.Canvas.extend({
     if (!parts.length) return;
     
     // Arrow configuration
-    const arrowSize = Math.max(8, options.weight * 2);
+    const arrowSize = Math.max(6, options.weight * 1.5);
     const arrowSpacing = 50; // pixels between arrows
     
     ctx.save();
