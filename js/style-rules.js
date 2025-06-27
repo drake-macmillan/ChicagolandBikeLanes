@@ -59,6 +59,7 @@ const ArrowRenderer = L.Canvas.extend({
     const arrowSpacing = 50; // pixels between arrows
     
     ctx.save();
+    ctx.setLineDash([]);
     ctx.strokeStyle = options.color;
     ctx.fillStyle = options.color;
     ctx.lineWidth = Math.max(1, options.weight * 0.7);
