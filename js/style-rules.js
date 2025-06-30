@@ -23,16 +23,15 @@ export function getStyle(feature) {
     baseStyle.showArrows = true;
     console.log('Added showArrows to style'); // Debug line
   }
-  
-  console.log('Final style:', baseStyle); // Debug line
-  return baseStyle;
-}
-
-// Add red shadow for under construction //testing this out
+  // Add red shadow for under construction //testing this out
   if (status === 'under construction') {
     baseStyle.shadowColor = 'red';
     baseStyle.shadowBlur = 10;
   }
+  
+  console.log('Final style:', baseStyle); // Debug line
+  return baseStyle;
+}
 
 // Custom Canvas Renderer with Arrow Support
 const ArrowRenderer = L.Canvas.extend({
