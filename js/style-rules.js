@@ -41,7 +41,7 @@ const ArrowRenderer = L.Canvas.extend({
     if (layer.options.status === 'under construction') {
       console.log('Rendering under construction line with red shadow');
       ctx.save();
-      ctx.shadowColor = 'red';
+      ctx.shadowColor = 'yellow';
       ctx.shadowBlur = 10;
       ctx.shadowOffsetX = 0;
       ctx.shadowOffsetY = 0;
