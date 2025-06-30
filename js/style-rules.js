@@ -36,6 +36,11 @@ export function getStyle(feature) {
 // Custom Canvas Renderer with Arrow Support
 const ArrowRenderer = L.Canvas.extend({
   _updatePoly: function(layer, closed) {
+    // Draw shadow first if under construction
+    if (layer.options.underConstruction) {
+      this._drawShadow(layer, closed);
+    }
+    
     // Call the original _updatePoly method
     L.Canvas.prototype._updatePoly.call(this, layer, closed);
     
@@ -44,6 +49,55 @@ const ArrowRenderer = L.Canvas.extend({
       console.log('Drawing arrows for layer'); // Debug line
       this._drawArrows(layer);
     }
+  },
+  
+  _drawShadow: function(layer, closed) {
+    const ctx = this._ctx;
+    const parts = layer._parts;
+    const options = layer.options;
+    
+    if (!parts.length) return;
+    
+    // Save context and set shadow properties
+    ctx.save();
+    ctx.shadowColor = 'rgba(255, 0, 0, 0.8)';
+    ctx.shadowBlur = 8;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
+    
+    // Set line style for shadow
+    ctx.globalCompositeOperation = 'destination-over'; // Draw shadow behind main line
+    ctx.strokeStyle = options.color;
+    ctx.lineWidth = options.weight;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    
+    if (options.dashArray) {
+      const dashArray = options.dashArray.split(',').map(Number);
+      ctx.setLineDash(dashArray);
+    } else {
+      ctx.setLineDash([]);
+    }
+    
+    // Draw the shadow
+    parts.forEach(part => {
+      if (part.length < 2) return;
+      
+      ctx.beginPath();
+      ctx.moveTo(part[0].x, part[0].y);
+      
+      for (let i = 1; i < part.length; i++) {
+        ctx.lineTo(part[i].x, part[i].y);
+      }
+      
+      if (closed) {
+        ctx.closePath();
+      }
+      
+      ctx.stroke();
+    });
+    
+    ctx.restore();
   },
   
   _drawArrows: function(layer) {
