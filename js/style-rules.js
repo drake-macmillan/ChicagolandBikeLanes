@@ -15,7 +15,7 @@ export function getStyle(feature) {
     "Unpaved Trail":              { color: "#5A4B49", weight: 4.5, dashArray: null },
   };
 
-  const baseStyle = styles[type] || { color: "#AAAAAA", weight: 5 };
+  const baseStyle = styles[type] || { color: "#FFC0CB", weight: 10 }; //unstyled lines are very obvious, so they can be renamed
 
   // Add arrow properties for one-way routes
   if (isOneway) {
