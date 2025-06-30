@@ -36,12 +36,14 @@ export function getStyle(feature) {
 const ArrowRenderer = L.Canvas.extend({
   _updatePoly: function(layer, closed) {
     // Handle under construction styling
-    if (layer.options.status === 'under construction') {
-      console.log('Rendering under construction line with reduced opacity');
-      const ctx = this._ctx;
-      ctx.save();
-      ctx.globalAlpha = 0.25; // Set opacity
-    }
+      if (layer.options.status === 'under construction') {
+        console.log('Rendering under construction line with red shadow');
+        ctx.save();
+        ctx.shadowColor = 'red';
+        ctx.shadowBlur = 10;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 0;
+      }
     
     // Call the original _updatePoly method
     L.Canvas.prototype._updatePoly.call(this, layer, closed);
