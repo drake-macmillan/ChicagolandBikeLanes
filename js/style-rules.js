@@ -38,28 +38,53 @@ const ArrowRenderer = L.Canvas.extend({
   const ctx = this._ctx;
   let shadowApplied = false;
 
+  // Temporarily override dash array if needed
+  const origDash = ctx.getLineDash ? ctx.getLineDash() : [];
+
   if (layer.options.status === 'under construction') {
-    console.log('Rendering under construction line with yellow shadow');
+    console.log('Rendering under construction line with green shadow');
     ctx.save();
     ctx.shadowColor = 'green';
     ctx.shadowBlur = 20;
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 0;
+
+    // Temporarily remove dashes for shadow
+    if (layer.options.dashArray) {
+      ctx.setLineDash([]);
+    }
+
+    L.Canvas.prototype._updatePoly.call(this, layer, closed);
+
+    ctx.restore();
     shadowApplied = true;
-  } else if (layer.options.status === 'under construction, blocked') {
+  }
+
+  if (layer.options.status === 'under construction, blocked') {
     console.log('Rendering under construction line with red shadow');
     ctx.save();
     ctx.shadowColor = 'red';
     ctx.shadowBlur = 10;
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 0;
+
+    if (layer.options.dashArray) {
+      ctx.setLineDash([]);
+    }
+
+    L.Canvas.prototype._updatePoly.call(this, layer, closed);
+
+    ctx.restore();
     shadowApplied = true;
   }
 
-  L.Canvas.prototype._updatePoly.call(this, layer, closed);
-
-  if (shadowApplied) {
-    ctx.restore();
+  // Draw the actual line (with proper dashes, if any)
+  if (shadowApplied && layer.options.dashArray) {
+    ctx.setLineDash(layer.options.dashArray.split(',').map(Number));
+    L.Canvas.prototype._updatePoly.call(this, layer, closed);
+    ctx.setLineDash(origDash);
+  } else if (!shadowApplied) {
+    L.Canvas.prototype._updatePoly.call(this, layer, closed);
   }
 
   if (layer.options.showArrows && !closed) {
