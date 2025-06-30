@@ -154,3 +154,29 @@ body, html {
   }
 }
 
+.under-construction-line {
+  filter: drop-shadow(0px 0px 8px rgba(255, 0, 0, 0.8)) drop-shadow(0px 0px 4px rgba(255, 0, 0, 0.6));
+}
+/* Alternative approach using SVG filter (more customizable) */
+/* Add this SVG filter definition to your HTML: */
+/*
+<svg style="position: absolute; width: 0; height: 0;">
+  <defs>
+    <filter id="red-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/> 
+      </feMerge>
+    </filter>
+  </defs>
+</svg>
+*/
+
+/* Then use this CSS instead of the drop-shadow version: */
+/*
+.under-construction-line {
+  filter: url(#red-glow);
+  stroke: red !important;
+}
+*/
