@@ -2,15 +2,12 @@
 export function getStyle(feature) {
   const type = feature.properties.displayrou;
   const isOneway = feature.properties.br_oneway === "Y";
-  
-  console.log('Styling feature:', type, 'isOneway:', isOneway); // Debug line
-  
+  const status = feature.properties.status; // Get status from feature properties
+    
   const styles = {
     "Protected Bike Lane":        { color: "#2547cf", weight: 4, dashArray: null },
     "Painted Lane, Large":        { color: "#e05b1d", weight: 3.5, dashArray: "4,8" },
     "Painted Lane":               { color: "#e05b1d", weight: 1.5, dashArray: "4,8" },
-    "2-way Mellow Route/Greenway":{ color: "#2547cf", weight: 3, dashArray: "4,4" }, //will delete once I confirm new format works
-    "1-way Mellow Route/Greenway":{ color: "#2547cf", weight: 2, dashArray: "4,4" },  //will delete once I confirm new format works
     "Chill Side Street":          { color: "#2547cf", weight: 2.5, dashArray: "4,4" },
     "Paved Trail":                { color: "#000080", weight: 4.5, dashArray: null },
     "Unpaved Trail":              { color: "#5A4B49", weight: 4.5, dashArray: null },
@@ -23,16 +20,17 @@ export function getStyle(feature) {
     baseStyle.showArrows = true;
     console.log('Added showArrows to style'); // Debug line
   }
+
+  // Add red shadow for under construction
+  if (status === 'under construction') {
+    baseStyle.shadowColor = 'red';
+    baseStyle.shadowBlur = 10;
+    console.log('Added red shadow for under construction'); // Debug line
+  }
   
   console.log('Final style:', baseStyle); // Debug line
   return baseStyle;
 }
-
-// Add red shadow for under construction //testing this out
-  if (status === 'under construction') {
-    baseStyle.shadowColor = 'red';
-    baseStyle.shadowBlur = 10;
-  }
 
 // Custom Canvas Renderer with Arrow Support
 const ArrowRenderer = L.Canvas.extend({
