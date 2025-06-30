@@ -2,9 +2,8 @@
 export function getStyle(feature) {
   const type = feature.properties.displayrou;
   const isOneway = feature.properties.br_oneway === "Y";
-  
-  console.log('Styling feature:', type, 'isOneway:', isOneway); // Debug line
-  
+  const underConstruction = feature.properties.status === "under construction";
+    
   const styles = {
     "Protected Bike Lane":        { color: "#2547cf", weight: 4, dashArray: null },
     "Painted Lane, Large":        { color: "#e05b1d", weight: 3.5, dashArray: "4,8" },
@@ -24,7 +23,7 @@ export function getStyle(feature) {
     console.log('Added showArrows to style'); // Debug line
   }
   // Add red shadow for under construction //testing this out
-  if (status === 'under construction') {
+  if (underConstruction) {
     baseStyle.shadowColor = 'red';
     baseStyle.shadowBlur = 10;
   }
@@ -35,16 +34,28 @@ export function getStyle(feature) {
 
 // Custom Canvas Renderer with Arrow Support
 const ArrowRenderer = L.Canvas.extend({
-  _updatePoly: function(layer, closed) {
-    // Call the original _updatePoly method
-    L.Canvas.prototype._updatePoly.call(this, layer, closed);
-    
-    // Add arrows if the layer has showArrows property
-    if (layer.options.showArrows && !closed) {
-      console.log('Drawing arrows for layer'); // Debug line
-      this._drawArrows(layer);
-    }
-  },
+  const options = layer.options;
+  const ctx = this._ctx;
+
+  ctx.save();
+
+  // Add shadow if defined
+  if (options.shadowColor) {
+    ctx.shadowColor = options.shadowColor;
+    ctx.shadowBlur = options.shadowBlur || 0;
+  }
+
+  // Call the original _updatePoly method to draw the path
+  L.Canvas.prototype._updatePoly.call(this, layer, closed);
+
+  ctx.restore();
+
+  // Add arrows if the layer has showArrows property
+  if (options.showArrows && !closed) {
+    console.log('Drawing arrows for layer');
+    this._drawArrows(layer);
+  }
+},
   
   _drawArrows: function(layer) {
     const ctx = this._ctx;
