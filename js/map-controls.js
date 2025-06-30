@@ -77,15 +77,15 @@ buttonContainer.onAdd = function (map) {
     }
     dropdown.appendChild(item);
   };
-
+/*
   addDropdownOption("(Upcoming Projects)", (isOn) => {
    toggleDivvyLayer(map);
   }, true);
-
+*/
   addDropdownOption("Chicago Ward Boundaries", (isOn) => {
     toggleWardLayer(map, isOn);
   }, true);
-  
+  /*
   addDropdownOption("(CTA Trains)", (isOn) => {
     console.log("Upcoming Projects toggled:", isOn);
     toggleCTALayer(map, isOn);
@@ -95,7 +95,7 @@ buttonContainer.onAdd = function (map) {
     console.log("Upcoming Projects toggled:", isOn);
     toggleMetraLayer(map, isOn);
   }, true);
-  
+  */
   addDropdownSeparator();
   
   addDropdownOption("Open in Google Maps", () => {
