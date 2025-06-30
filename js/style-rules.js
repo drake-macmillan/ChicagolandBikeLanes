@@ -21,11 +21,9 @@ export function getStyle(feature) {
     console.log('Added showArrows to style'); // Debug line
   }
 
-  // Add red shadow for under construction
+  // make less opaque if under construction
   if (status === 'under construction') {
-    baseStyle.shadowColor = 'red';
-    baseStyle.shadowBlur = 10;
-    console.log('Added red shadow for under construction'); // Debug line
+    baseStyle.opacity = 0.5;
   }
   
   console.log('Final style:', baseStyle); // Debug line
