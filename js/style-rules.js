@@ -37,11 +37,20 @@ const ArrowRenderer = L.Canvas.extend({
   _updatePoly: function(layer, closed) {
     const ctx = this._ctx; // Fix: make ctx accessible throughout the method
 
-    // Handle under construction styling
+    // under construction styling
     if (layer.options.status === 'under construction') {
       console.log('Rendering under construction line with red shadow');
       ctx.save();
       ctx.shadowColor = 'yellow';
+      ctx.shadowBlur = 10;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 0;
+    }
+    // blocked off from construction styling
+    if (layer.options.status === 'under construction, blocked') {
+      console.log('Rendering under construction line with red shadow');
+      ctx.save();
+      ctx.shadowColor = 'red';
       ctx.shadowBlur = 10;
       ctx.shadowOffsetX = 0;
       ctx.shadowOffsetY = 0;
