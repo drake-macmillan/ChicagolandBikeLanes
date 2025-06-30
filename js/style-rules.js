@@ -10,6 +10,8 @@ export function getStyle(feature) {
     "Protected Bike Lane":        { color: "#2547cf", weight: 4, dashArray: null },
     "Painted Lane, Large":        { color: "#e05b1d", weight: 3.5, dashArray: "4,8" },
     "Painted Lane":               { color: "#e05b1d", weight: 1.5, dashArray: "4,8" },
+    "2-way Mellow Route/Greenway":{ color: "#2547cf", weight: 3, dashArray: "4,4" }, //will delete once I confirm new format works
+    "1-way Mellow Route/Greenway":{ color: "#2547cf", weight: 2, dashArray: "4,4" },  //will delete once I confirm new format works
     "Chill Side Street":          { color: "#2547cf", weight: 2.5, dashArray: "4,4" },
     "Paved Trail":                { color: "#000080", weight: 4.5, dashArray: null },
     "Unpaved Trail":              { color: "#5A4B49", weight: 4.5, dashArray: null },
@@ -38,6 +40,7 @@ const ArrowRenderer = L.Canvas.extend({
   _updatePoly: function(layer, closed) {
     // Draw shadow first if under construction
     if (layer.options.underConstruction) {
+      console.log('Drawing shadow for under construction line'); // Debug
       this._drawShadow(layer, closed);
     }
     
@@ -58,43 +61,38 @@ const ArrowRenderer = L.Canvas.extend({
     
     if (!parts.length) return;
     
-    // Save context and set shadow properties
+    // Draw multiple offset lines to create a glow effect
+    const offsets = [
+      {x: 0, y: 0, alpha: 0.8, width: options.weight + 4},
+      {x: 1, y: 1, alpha: 0.6, width: options.weight + 2},
+      {x: -1, y: -1, alpha: 0.6, width: options.weight + 2}
+    ];
+    
     ctx.save();
-    ctx.shadowColor = 'rgba(255, 0, 0, 0.8)';
-    ctx.shadowBlur = 8;
-    ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 0;
     
-    // Set line style for shadow
-    ctx.globalCompositeOperation = 'destination-over'; // Draw shadow behind main line
-    ctx.strokeStyle = options.color;
-    ctx.lineWidth = options.weight;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    
-    if (options.dashArray) {
-      const dashArray = options.dashArray.split(',').map(Number);
-      ctx.setLineDash(dashArray);
-    } else {
+    offsets.forEach(offset => {
+      ctx.strokeStyle = `rgba(255, 0, 0, ${offset.alpha})`;
+      ctx.lineWidth = offset.width;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
       ctx.setLineDash([]);
-    }
-    
-    // Draw the shadow
-    parts.forEach(part => {
-      if (part.length < 2) return;
       
-      ctx.beginPath();
-      ctx.moveTo(part[0].x, part[0].y);
-      
-      for (let i = 1; i < part.length; i++) {
-        ctx.lineTo(part[i].x, part[i].y);
-      }
-      
-      if (closed) {
-        ctx.closePath();
-      }
-      
-      ctx.stroke();
+      parts.forEach(part => {
+        if (part.length < 2) return;
+        
+        ctx.beginPath();
+        ctx.moveTo(part[0].x + offset.x, part[0].y + offset.y);
+        
+        for (let i = 1; i < part.length; i++) {
+          ctx.lineTo(part[i].x + offset.x, part[i].y + offset.y);
+        }
+        
+        if (closed) {
+          ctx.closePath();
+        }
+        
+        ctx.stroke();
+      });
     });
     
     ctx.restore();
@@ -202,7 +200,6 @@ const ArrowRenderer = L.Canvas.extend({
 
 // Export the ArrowRenderer so it can be used in other files
 export { ArrowRenderer };
-
 /* 
 // Enhanced styling function with canvas renderer support
 export function getStyle(feature) {
