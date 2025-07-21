@@ -102,7 +102,7 @@ const ArrowRenderer = L.Canvas.extend({
 
     // Arrow configuration
     const arrowSize = 5;
-    const arrowSpacing = 25; // pixels between arrows
+    const arrowSpacing = 35; // pixels between arrows
 
     ctx.save();
     ctx.setLineDash([]);
