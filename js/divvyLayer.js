@@ -137,13 +137,11 @@ export function toggleDivvyLayer(map) {
     if (ebikeLayer) map.removeLayer(ebikeLayer);
     divvyLayerEnabled = false;
   } else {
-    if (!stationLayer || !dotLayer || !ebikeLayer) {
-      loadDivvyStations(map);
-    } else {
-      divvyLayerEnabled = true;
-      toggleStationVisibility(map);
-      toggleEbikeVisibility(map);
-    }
+    // Always fetch fresh data when toggling on
+    stationLayer = null;
+    dotLayer = null;
+    ebikeLayer = null;
+    loadDivvyStations(map);
   }
 }
 
