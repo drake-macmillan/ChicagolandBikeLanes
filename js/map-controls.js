@@ -77,11 +77,7 @@ buttonContainer.onAdd = function (map) {
     }
     dropdown.appendChild(item);
   };
-/*
-  addDropdownOption("(Upcoming Projects)", (isOn) => {
-   toggleDivvyLayer(map);
-  }, true);
-*/
+  
   addDropdownOption("Chicago Ward Boundaries", (isOn) => {
     toggleWardLayer(map, isOn);
   }, true);
