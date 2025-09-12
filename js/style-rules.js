@@ -9,7 +9,7 @@ export function getStyle(feature) {
   const styles = {
     "Protected Bike Lane":        { color: "#2547cf", weight: 4, dashArray: null },
     "Painted Lane, Large":        { color: "#e05b1d", weight: 3.5, dashArray: "4,8" },
-    "Painted Lane":               { color: "#e05b1d", weight: 1.5, dashArray: "4,8" },
+    "Painted Lane":               { color: "#e05b1d", weight: 1.8, dashArray: "4,8" },
     "Chill Side Street":          { color: "#2547cf", weight: 2, dashArray: "4,4" },
     "Paved Trail":                { color: "#000080", weight: 4.5, dashArray: null },
     "Unpaved Trail":              { color: "#5A4B49", weight: 4.5, dashArray: null },
