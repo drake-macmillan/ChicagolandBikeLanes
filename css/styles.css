@@ -154,12 +154,3 @@ body, html {
     opacity: 1;
   }
 }
-
-.under-construction-pulse {
-  animation: lane-pulse 3s infinite;
-}
-@keyframes lane-pulse {
-  0% { opacity: 1; }
-  50% { opacity: 0.25; }
-  100% { opacity: 1; }
-}
