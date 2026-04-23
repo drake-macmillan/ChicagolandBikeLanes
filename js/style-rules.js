@@ -7,7 +7,7 @@ export function getStyle(feature) {
   console.log('Styling feature:', type, 'status:', status); // Debug line
 
   const styles = {
-    "Protected Bike Lane":        { color: "#2547cf", weight: 3.5, dashArray: null },
+    "Protected Bike Lane":        { color: "#2547cf", weight: 3, dashArray: null },
     "Painted Lane, Large":        { color: "#e05b1d", weight: 3, dashArray: "4,8" },
     "Painted Lane":               { color: "#e05b1d", weight: 1.8, dashArray: "4,8" },
     "Chill Side Street":          { color: "#2547cf", weight: 2, dashArray: "4,4" },
