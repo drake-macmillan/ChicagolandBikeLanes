@@ -64,7 +64,7 @@ const ArrowRenderer = L.Canvas.extend({
     console.log('Rendering under construction line with red shadow');
     ctx.save();
     ctx.shadowColor = 'red';
-    ctx.shadowBlur = 35;
+    ctx.shadowBlur = 25;
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 0;
 
@@ -101,7 +101,7 @@ const ArrowRenderer = L.Canvas.extend({
     if (!parts.length) return;
 
     // Arrow configuration
-    const arrowSize = 5;
+    const arrowSize = 4;
     const arrowSpacing = 35; // pixels between arrows
 
     ctx.save();
