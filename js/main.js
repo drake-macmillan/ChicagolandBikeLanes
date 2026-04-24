@@ -4,7 +4,7 @@ import { getStyle } from './style-rules.js';
 import { loadDivvyStations } from './divvyLayer.js';
 
 function loadBikeLanes() {
-  fetch('data/chicagoland_bikeways_apr24_11am.json')
+  fetch('data/chicagoland_bikeways_apr24_3pm.json')
     .then(response => response.json())
     .then(data => {
       L.geoJSON(data, {
