@@ -63,6 +63,7 @@ const ArrowRenderer = L.Canvas.extend({
   if (layer.options.status === 'under construction, blocked') {
     console.log('Rendering under construction line with red shadow');
     ctx.save();
+    ctx.globalAlpha = 0.4;
     ctx.shadowColor = 'red';
     ctx.shadowBlur = 55;
     ctx.shadowOffsetX = 0;
@@ -80,15 +81,17 @@ const ArrowRenderer = L.Canvas.extend({
 
   // Draw the actual line (with proper dashes, if any)
   if (shadowApplied && layer.options.dashArray) {
+    ctx.save();
+    if (isUnderConstruction) ctx.globalAlpha = 0.4;
     ctx.setLineDash(layer.options.dashArray.split(',').map(Number));
     L.Canvas.prototype._updatePoly.call(this, layer, closed);
     ctx.setLineDash(origDash);
+    ctx.restore();
   } else if (!shadowApplied) {
     L.Canvas.prototype._updatePoly.call(this, layer, closed);
   }
 
   if (layer.options.showArrows && !closed) {
-    console.log('Drawing arrows for layer');
     this._drawArrows(layer);
   }
 },
