@@ -62,11 +62,17 @@ const ArrowRenderer = L.Canvas.extend({
 
   if (layer.options.status === 'under construction, blocked') {
     console.log('Rendering under construction line with red shadow');
-    ctx.save();
-    ctx.shadowColor = 'red';
-    ctx.shadowBlur = 100;
-    ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 0;
+      ctx.save();
+      ctx.shadowColor = 'rgba(255, 40, 40, 1)';
+      ctx.shadowBlur = 30;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 0;
+
+// Stroke multiple times to accumulate glow
+for (let i = 0; i < 5; i++) {
+  ctx.stroke();
+}
+ctx.restore();
 
     if (layer.options.dashArray) {
       ctx.setLineDash([]);
