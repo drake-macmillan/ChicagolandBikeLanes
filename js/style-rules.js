@@ -10,6 +10,7 @@ export function getStyle(feature) {
     "Protected Bike Lane":                            { color: "#2547cf", weight: 2, dashArray: null },
     "Protected Bike Lane, Under Construction":        { color: "#2547cf", weight: 2, dashArray: null, opacity: 0.20},
     "Painted Lane, Large":                            { color: "#e05b1d", weight: 2, dashArray: "8,4" },
+    "Painted Lane, Large, Under Construction":        { color: "#e05b1d", weight: 2, dashArray: "8,4", opacity: 0.20 },
     "Painted Lane":                                   { color: "#e05b1d", weight: 1.3, dashArray: "4,8" },
     "Chill Side Street":                              { color: "#2547cf", weight: 1.5, dashArray: "4,4" },
     "Paved Trail":                                    { color: "#000080", weight: 4.5, dashArray: null },
